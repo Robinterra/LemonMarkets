@@ -1,49 +1,81 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using LemonMarkets.Models.Enums;
+using System.Text.Json.Serialization;
 
 namespace LemonMarkets.Models
 {
     public class Instrument
     {
-        [JsonProperty("isin")]
-        public string ISIN { get; set; }
+        [JsonPropertyName("isin")]
+        public string ISIN
+        {
+            get; set;
+        }
 
-        [JsonProperty("wkn")]
-        public string WKN { get; set; }
+        [JsonPropertyName("wkn")]
+        public string WKN
+        {
+            get; set;
+        }
 
-        [JsonProperty("name")]
-        public string Name { get; set; }
+        [JsonPropertyName("name")]
+        public string Name
+        {
+            get; set;
+        }
 
-        [JsonProperty("title")]
-        public string Title { get; set; }
+        [JsonPropertyName("title")]
+        public string Title
+        {
+            get; set;
+        }
 
-        [JsonProperty("symbol")]
-        public string Symbol { get; set; }
+        [JsonPropertyName("symbol")]
+        public string Symbol
+        {
+            get; set;
+        }
 
-        [JsonProperty("type")]
-        [JsonConverter(typeof(StringEnumConverter))]
-        public InstrumentType InstrumentType { get; set; }
+        [JsonPropertyName("type")]
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public InstrumentType InstrumentType
+        {
+            get; set;
+        }
 
-        [JsonProperty("currency")]
-        public string Currency { get; set; }
+        [JsonPropertyName("currency")]
+        public string Currency
+        {
+            get; set;
+        }
 
-        [JsonProperty("tradable")]
-        public bool Tradable { get; set; }
+        [JsonPropertyName("tradable")]
+        public bool Tradable
+        {
+            get; set;
+        }
 
-        [JsonProperty("trading_venues")]
-        public List<TradingVenue> TradingVenues { get; set; } = new List<TradingVenue>();
+        [JsonPropertyName("trading_venues")]
+        public List<TradingVenue> TradingVenues
+        {
+            get; set;
+        } = new List<TradingVenue>();
 
     }
 
     public class TradingVenue
     {
-        [JsonProperty("title")]
-        public string Title { get; set; }
+        [JsonPropertyName("title")]
+        public string Title
+        {
+            get; set;
+        }
 
-        [JsonProperty("mic")]
-        public string Mic { get; set; }
+        [JsonPropertyName("mic")]
+        public string Mic
+        {
+            get; set;
+        }
     }
 
     

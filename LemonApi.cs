@@ -1,231 +1,129 @@
-﻿using System.Dynamic;
-using System.Globalization;
-using LemonMarkets.Extensions;
+﻿using System.Globalization;
 using LemonMarkets.Models.Enums;
+using LemonMarkets.Interfaces;
+using LemonMarkets.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Security.Authentication;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Web;
+using WsApiCore;
+using System.Security.Cryptography.X509Certificates;
+using LemonMarkets.Repos.V1;
 
 namespace LemonMarkets
 {
-    using LemonMarkets.Models;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Linq;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Net;
-    using System.Net.Http;
-    using System.Security.Authentication;
-    using System.Text;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using System.Web;
 
     /// <summary>
     /// Defines the <see cref="LemonApi" />.
     /// </summary>
-    public class LemonApi
+    public class LemonApi : ILemonApi
     {
-        private static bool throwErrors;
+
+        #region vars
 
         private static Semaphore semaphore = new Semaphore(1, 1);
 
-        private static HttpClient httpClient = null;
-
-        private static string clientId, clientSecret;
-
-        private static DateTime tokenExpireDate;
-
-        private static string apiDataBaseUrl = "https://paper-data.lemon.markets/v1/";
+        private static string apiDataBaseUrl = "https://data.lemon.markets";
         
-        private static string apiTradingBaseUrl = "https://paper-trading.lemon.markets/rest/v1/";
+        private static string apiPaperTradingBaseUrl = "https://paper-trading.lemon.markets";
 
-        public LemonApi()
-        { }
+        private static string apiRealTradingBaseUrl = "https://trading.lemon.markets";
 
-        public static async Task Init(string lemonClientId, string lemonClientSecret, bool throwExceptions = true)
+        #endregion vars
+
+        #region get/set
+
+        public ConnectionInfo ConnectionInfo
         {
-            try
-            {
-                throwErrors = throwExceptions;
-                ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
-
-                var httpClientHandler = new HttpClientHandler
-                {
-                    ServerCertificateCustomValidationCallback = (message, certificate2, arg3, arg4) => true,
-                    SslProtocols = SslProtocols.Tls | SslProtocols.Tls11 | SslProtocols.Tls12 | SslProtocols.Ssl2 | SslProtocols.Ssl3
-                };
-
-                httpClient = new HttpClient(httpClientHandler);
-                clientId = lemonClientId;
-                clientSecret = lemonClientSecret;
-
-                var tokenResult = await GetLemonToken();
-                tokenExpireDate = tokenResult.expireDate;
-                httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + tokenResult.Token);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
+            get;
         }
 
-        public async Task<PostedOrder> PostOrder(PostOrderQuery query)
+        public string ApiKey
         {
-            try
-            {
-                var requestUrl = apiTradingBaseUrl + "spaces/" + query.SpaceUuid + "/orders/";
-                
-                if (query.ValidUntil < DateTime.UtcNow)
-                    throw new Exception("Can't post order: Valid Until < now");
-                if(query.Side == OrderSide.All)
-                    throw new Exception("Can't post order: OrderSide not specified");
-
-                var qryParams = new Dictionary<string, string>
-                {
-                    {"isin", query.Isin},
-                    {"valid_until", query.ValidUntil.ToUnixDt().ToString()},
-                    {"side", query.Side.ToString().ToLower()},
-                    {"quantity", query.Quantity.ToString()}
-                };
-
-                if(query.StopPrice.HasValue)
-                    qryParams.Add("stop_price", query.StopPrice.Value.ToString(CultureInfo.InvariantCulture));
-                if (query.LimitPrice.HasValue)
-                    qryParams.Add("limit_price", query.LimitPrice.Value.ToString(CultureInfo.InvariantCulture));
-
-                var json = await MakeRequest(requestUrl, qryParams);
-                var result = JsonConvert.DeserializeObject<PostedOrder>(json);
-                return result;
-            }
-            catch
-            {
-                if (throwErrors) throw;
-                return null;
-            }
+            get;
         }
 
-        public async Task<bool> DeleteOrder(string spaceUuid, string orderUuid)
+        internal WsAPICore TradingApi
         {
-            try
-            {
-                var requestUrl = apiTradingBaseUrl + "spaces/" + spaceUuid + "/orders/" + orderUuid + "/";
-                var json = await MakeRequest(requestUrl, null, "DELETE");
-                return true;
-            }
-            catch
-            {
-                if (throwErrors) throw;
-                return false;
-            }
+            get;
         }
 
-        public async Task<bool> ActivateOrder(string spaceUuid, string orderUuid)
+        internal WsAPICore MarketDataApi
         {
-            try
-            {
-                var requestUrl = apiTradingBaseUrl + "spaces/" + spaceUuid + "/orders/" + orderUuid + "/activate";
-                var json = await MakeRequest(requestUrl, null, "PUT");
-                return true;
-            }
-            catch
-            {
-                if (throwErrors) throw;
-                return false;
-            }
+            get;
         }
 
-        public async Task<LemonResult<Space>> GetSpaces()
+        public IOrdersRepo Orders
         {
-            try
-            {
-                var requestUrl = apiTradingBaseUrl + "spaces";
-                var json = await MakeRequest(requestUrl, null, "GET");
-                var results = JsonConvert.DeserializeObject<LemonResult<Space>>(json);
-                return results;
-            }
-            catch
-            {
-                if (throwErrors) throw;
-                return null;
-            }
+            get;
         }
 
-        public async Task<Space> GetSpace(string uuid)
+        public ISpacesRepo Spaces
         {
-            try
-            {
-                var requestUrl = apiTradingBaseUrl + "spaces/" + uuid + "/";
-                var json = await MakeRequest(requestUrl, null, "GET");
-                var result = JsonConvert.DeserializeObject<Space>(json);
-                return result;
-            }
-            catch
-            {
-                if (throwErrors) throw;
-                return null;
-            }
+            get;
         }
 
-        public async Task<LemonResult<Order>> GetOrders(OrderSearchFilter filter)
+        #endregion get/set
+
+        #region ctor
+
+        public LemonApi(string apiKey, ConnectionInfo connectionInfo)
         {
-            try
-            {
-                if (filter == null || string.IsNullOrEmpty(filter.SpaceUuid))
-                    throw new Exception("Space Uuid is required");
+            this.ConnectionInfo = connectionInfo;
+            this.ApiKey = apiKey;
 
-                var requestUrl = apiTradingBaseUrl + "spaces/" + filter.SpaceUuid + "/orders";
+            this.TradingApi = new WsAPICore(connectionInfo.TradingAdress, "v1");
+            this.TradingApi.CheckCertEasy += Api_CheckCertEasy;
+            this.TradingApi.SetNewAuth ( apiKey );
+            this.MarketDataApi = new WsAPICore(connectionInfo.MarketDataAdress, "v1");
+            this.MarketDataApi.CheckCertEasy += Api_CheckCertEasy;
+            this.MarketDataApi.SetNewAuth ( apiKey );
 
-                var parameters = new List<string>();
-
-                if(filter.From.HasValue)
-                    parameters.Add("created_at_from=" + filter.From.ToUnixDt());
-                if (filter.To.HasValue)
-                    parameters.Add("created_at_until=" + filter.To.ToUnixDt());
-                if(filter.Side != OrderSide.All)
-                    parameters.Add("side=" + filter.Side.ToString().ToLower());
-                if (filter.Type != OrderType.All)
-                    parameters.Add("type=" + filter.Type.ToString().ToLower());
-                
-                if (parameters.Any())
-                    requestUrl += "?" + string.Join("&", parameters);
-
-                var result = new LemonResult<Order>();
-
-                var hasNextPage = true;
-                while (hasNextPage)
-                {
-                    var json = await MakeRequest(requestUrl, null, "GET");
-                    var res = JsonConvert.DeserializeObject<LemonResult<Order>>(json);
-                    hasNextPage = filter.WithPaging && !string.IsNullOrEmpty(res.Next);
-                    if (!hasNextPage)
-                        return res;
-                    requestUrl = res.Next;
-                    result.Results.AddRange(res.Results);
-                    result.Next = res.Next;
-                    result.Previous = res.Previous;
-                }
-                return result;
-            }
-            catch
-            {
-                if (throwErrors) throw;
-                return null;
-            }
+            this.Orders = new OrdersRepo(this.TradingApi);
+            this.Spaces = new SpaceRepo ( this.TradingApi );
         }
 
-        // TODO
-        public async Task<Space> GetOrder(string spaceUuid, string orderUuid)
+        #endregion ctor
+
+        #region methods
+
+        public static ILemonApi Build(string apiKey, MoneyTradingMode mode)
         {
-            return await Task.FromResult<Space>(null);
+            string tradingUrl = mode == MoneyTradingMode.Paper ? apiPaperTradingBaseUrl : apiRealTradingBaseUrl;
+
+            ConnectionInfo connectionInfo = new ConnectionInfo(apiDataBaseUrl, tradingUrl);
+
+            return new LemonApi(apiKey, connectionInfo);
         }
 
-        public async Task<ChartValue> GetDailyOHLC(string symbol)
+        #endregion methods
+
+        #region events
+
+        private bool Api_CheckCertEasy(string hostname, X509Certificate2 x509Certificate2, X509Chain x509Chain)
+        {
+            if (x509Chain.ChainStatus.Any(status => status.Status == X509ChainStatusFlags.UntrustedRoot)) return false;//Assert.Fail("certifcate has no trusted root");
+            //if (!x509Certificate2.Subject.Contains(string.Format("CN={0}", hostname))) return false;//Assert.Fail("Hostname of the certificate not matched");
+
+            return true;
+        }
+
+        #endregion events
+
+        /*public async Task<ChartValue> GetDailyOHLC(string symbol)
         {
             try
             {
                 var url = $"{apiDataBaseUrl}ohlc/d1?isin={symbol}";
                 var json = await MakeRequest(url, null, "GET");
 
-                var response = JsonConvert.DeserializeObject<LemonResult<ChartValue>>(json);
+                var response = JsonConvert.DeserializeObject<LemonResults<ChartValue>>(json);
                 return response.Results.FirstOrDefault();
             }
             catch
@@ -291,7 +189,7 @@ namespace LemonMarkets
                     try
                     {
                         var json = await MakeRequest(url, null, "GET");
-                        var response = JsonConvert.DeserializeObject<LemonResult<ChartValue>>(json);
+                        var response = JsonConvert.DeserializeObject<LemonResults<ChartValue>>(json);
 
                         foreach (var c in response.Results)
                         {
@@ -335,11 +233,11 @@ namespace LemonMarkets
             return result.OrderBy(p => p.Created).ToList();
         }
 
-        public async Task<LemonResult<Instrument>> Search(InstrumentSearchFilter filter)
+        public async Task<LemonResults<Instrument>> Search(InstrumentSearchFilter filter)
         {
             try
             {
-                var resultSet = new LemonResult<Instrument>(){Results = new List<Instrument>()};
+                var resultSet = new LemonResults<Instrument>(){Results = new List<Instrument>()};
 
                 var requestUrl = apiDataBaseUrl + "instruments?";
                 
@@ -349,8 +247,8 @@ namespace LemonMarkets
                 else
                     qryStr.Append("isin=" + string.Join(",", filter.SearchByIsins));
 
-                /*if (filter.TradingVenue.HasValue)
-                    qryStr.Append("&mic=" + filter.TradingVenue.GetValueOrDefault());*/
+                //if (filter.TradingVenue.HasValue)
+                //    qryStr.Append("&mic=" + filter.TradingVenue.GetValueOrDefault());
                     
                 if (filter.Currency.HasValue)
                     qryStr.Append("&currency=" + filter.Currency);
@@ -364,7 +262,7 @@ namespace LemonMarkets
                 while (hasNextPage)
                 {
                     var json = await MakeRequest(reqUrl, null, "GET");
-                    var results = JsonConvert.DeserializeObject<LemonResult<Instrument>>(json);
+                    var results = JsonConvert.DeserializeObject<LemonResults<Instrument>>(json);
                     resultSet.Next = results.Next;
                     resultSet.Previous = results.Previous;
 
@@ -380,119 +278,17 @@ namespace LemonMarkets
                 if (throwErrors) throw;
                 return null;
             }
-        }
+        }*/
 
-        private async Task<string> MakeRequest(string url, Dictionary<string, string> payload = null, string method = "POST")
+        #region enums
+
+        public enum MoneyTradingMode
         {
-            try
-            {
-                var client = await GetHttpClient();                
-                if (method == "POST")
-                {
-                    using (HttpContent formContent = new FormUrlEncodedContent(payload))
-                    {
-                        var r = await client.PostAsync(url, formContent).ConfigureAwait(false);
-                        r.EnsureSuccessStatusCode();
-                        return await r.Content.ReadAsStringAsync();
-                    }
-                }
-
-                if (method == "GET")
-                {
-                    var response = await client.GetAsync(url);
-                    response.EnsureSuccessStatusCode();
-                    return await response.Content.ReadAsStringAsync();
-                }
-
-                if (method == "PUT")
-                {
-                    if (payload == null)
-                        payload = new Dictionary<string, string>();
-
-                    using (HttpContent formContent = new FormUrlEncodedContent(payload))
-                    {
-                        var r = await client.PutAsync(url, formContent).ConfigureAwait(false);
-                        r.EnsureSuccessStatusCode();
-                        return await r.Content.ReadAsStringAsync();
-                    }
-                }
-
-                if (method == "DELETE")
-                {
-                    var response = await client.DeleteAsync(url);
-                    response.EnsureSuccessStatusCode();
-                    return await response.Content.ReadAsStringAsync();
-                }
-
-                
-
-                throw new Exception("MakeRequest: Undefined METHOD");
-            }
-            catch
-            {
-                throw;
-            }
+            Paper,
+            Real
         }
 
-        private async Task<HttpClient> GetHttpClient()
-        {
-            if (tokenExpireDate < DateTime.UtcNow)
-            {
-                try
-                {
-                    semaphore.WaitOne();
-                    var tokeResult = await GetLemonToken();
-                    tokenExpireDate = tokeResult.expireDate;
+        #endregion enums
 
-                    if (httpClient.DefaultRequestHeaders.Contains("Authorization"))
-                    {
-                        httpClient.DefaultRequestHeaders.Remove("Authorization");
-                    }
-
-                    httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + tokeResult.Token);
-                }
-                catch
-                { }
-                finally
-                {
-                    semaphore.Release();
-                }
-            }
-
-            return httpClient;
-        }
-
-        private static async Task<(string Token, DateTime expireDate)> GetLemonToken()
-        {
-            var result = string.Empty;
-            var expireDate = DateTime.UtcNow;
-            try
-            {
-                var data = new Dictionary<string, string>();
-                data.Add("client_id", clientId);
-                data.Add("client_secret", clientSecret);
-                data.Add("grant_type", "client_credentials");
-
-                string url = "https://auth.lemon.markets/oauth2/token";
-                var client = new HttpClient();
-
-                using (HttpContent formContent = new FormUrlEncodedContent(data))
-                {
-                    var response = await client.PostAsync(url, formContent).ConfigureAwait(false);
-                    response.EnsureSuccessStatusCode();
-                    var json = await response.Content.ReadAsStringAsync();
-                    var jObject = JObject.Parse(json);
-                    result = jObject.GetValue<string>("access_token");
-                    var expire = jObject.GetValue<double>("expires_in");
-                    expireDate = expireDate.AddSeconds(expire - 60); // subscract a little delay to ensure a smooth token refresh
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
-
-            return (result, expireDate);
-        }
     }
 }

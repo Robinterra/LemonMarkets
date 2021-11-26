@@ -1,38 +1,48 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using LemonMarkets.Models.Enums;
 
 namespace LemonMarkets.Models
 {
-    public class InstrumentSearchFilter
+    public class OrderSearchFilter
     {
-        public string SearchByString
+        public string? SpaceUuid
         {
             get; set;
         }
-        public List<string> SearchByIsins
+
+        public OrderSide Side
         {
             get; set;
         }
-        public InstrumentType? InstrumentType
+
+        public DateTime? From
         {
             get; set;
         }
-        public Enums.TradingVenue? TradingVenue
+
+        public DateTime? To
         {
             get; set;
         }
-        public Currency? Currency
+
+        public OrderType Type
         {
             get; set;
         }
-        public bool? IsTradable
+
+        public OrderStatus Status
         {
             get; set;
         }
+
         public bool WithPaging
         {
             get; set;
         }
 
+        public string? Isin
+        {
+            get; set;
+        }
     }
 }

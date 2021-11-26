@@ -1,29 +1,50 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
+using System.Text.Json.Serialization;
 
 namespace LemonMarkets.Models
 {
     public class ChartValue
     {
-        [JsonProperty("o")]
-        public double Open { get; set; }
+        [JsonPropertyName("o")]
+        public double Open
+        {
+            get; set;
+        }
 
-        [JsonProperty("c")]
-        public double Close { get; set; }
+        [JsonPropertyName("c")]
+        public double Close
+        {
+            get; set;
+        }
 
-        [JsonProperty("h")]
-        public double High { get; set; }
+        [JsonPropertyName("h")]
+        public double High
+        {
+            get; set;
+        }
 
-        [JsonProperty("l")]
-        public double Low { get; set; }
+        [JsonPropertyName("l")]
+        public double Low
+        {
+            get; set;
+        }
 
-        [JsonProperty("t")]
-        public string Timestamp { get; set; }
+        [JsonPropertyName("t")]
+        public string Timestamp
+        {
+            get; set;
+        }
 
         [JsonIgnore]
-        public DateTime Created { get; set; }
+        public DateTime Created
+        {
+            get; set;
+        }
 
         [JsonIgnore]
-        public string Symbol { get; set; }
+        public string Symbol
+        {
+            get; set;
+        }
     }
 }
