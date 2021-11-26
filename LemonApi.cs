@@ -1,19 +1,10 @@
-﻿using System.Globalization;
-using LemonMarkets.Models.Enums;
-using LemonMarkets.Interfaces;
+﻿using LemonMarkets.Interfaces;
 using LemonMarkets.Models;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Security.Authentication;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Web;
 using WsApiCore;
 using System.Security.Cryptography.X509Certificates;
+using lemon.LemonMarkets.Interfaces;
 using LemonMarkets.Repos.V1;
 
 namespace LemonMarkets
@@ -69,6 +60,11 @@ namespace LemonMarkets
             get;
         }
 
+        public IQuotesRepo Quotes
+        {
+            get;
+        }
+
         #endregion get/set
 
         #region ctor
@@ -81,12 +77,14 @@ namespace LemonMarkets
             this.TradingApi = new WsAPICore(connectionInfo.TradingAdress, "v1");
             this.TradingApi.CheckCertEasy += Api_CheckCertEasy;
             this.TradingApi.SetNewAuth ( apiKey );
+
             this.MarketDataApi = new WsAPICore(connectionInfo.MarketDataAdress, "v1");
             this.MarketDataApi.CheckCertEasy += Api_CheckCertEasy;
             this.MarketDataApi.SetNewAuth ( apiKey );
 
             this.Orders = new OrdersRepo(this.TradingApi);
             this.Spaces = new SpaceRepo ( this.TradingApi );
+            this.Quotes = new QuotesRepo ( this.MarketDataApi );
         }
 
         #endregion ctor

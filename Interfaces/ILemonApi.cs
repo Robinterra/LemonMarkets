@@ -1,4 +1,5 @@
-﻿using LemonMarkets.Models;
+﻿using lemon.LemonMarkets.Interfaces;
+using LemonMarkets.Models;
 
 namespace LemonMarkets.Interfaces
 {
@@ -16,6 +17,11 @@ namespace LemonMarkets.Interfaces
         }
 
         IOrdersRepo Orders
+        {
+            get;
+        }
+
+        IQuotesRepo Quotes
         {
             get;
         }
