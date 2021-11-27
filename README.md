@@ -18,7 +18,7 @@ if ( result == null ) return 1;
 
 Console.WriteLine(result.Status);
 
-LemonResults<Quote>? results = await lemonApi.Quotes.Get (new QuoteSearchFilter("DE0008404005"));
+LemonResults<Quote>? results = await lemonApi.Quotes.GetAsync (new ("DE0008404005"));
 if ( results == null ) return 2;
 
 Console.WriteLine ( results.Status );

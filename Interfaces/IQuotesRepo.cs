@@ -8,7 +8,7 @@ namespace lemon.LemonMarkets.Interfaces
     public interface IQuotesRepo
     {
 
-        Task<LemonResults<Quote>?> Get (QuoteSearchFilter request);
+        Task<LemonResults<Quote>?> GetAsync (QuoteSearchFilter request);
 
     }
 

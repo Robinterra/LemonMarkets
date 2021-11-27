@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using LemonMarkets.Models.Enums;
 
 namespace LemonMarkets.Models
 {
@@ -17,13 +19,49 @@ namespace LemonMarkets.Models
             get;
         }
 
+        /// <summary>
+        /// Market Identifier Code of Trading Venue. Currently, only XMUN is supported.
+        /// </summary>
+        public string? Mic
+        {
+            get;
+        }
+
+        /// <summary>
+        /// Start of Time Range for which you want to get the quotes. Use int/date-iso-string to define your timestamp range. Use from=latest to receive the latest quotes.
+        /// </summary>
+        public DateTime? From
+        {
+            get;
+        }
+
+        /// <summary>
+        /// End of Time Range for which you want to get the quotes. Use int/date-iso-string to define your timestamp range.
+        /// </summary>
+        public DateTime? To
+        {
+            get;
+        }
+
+        /// <summary>
+        /// Sort your API response, either ascending (asc) or descending (desc)
+        /// </summary>
+        public Sorting Sorting
+        {
+            get;
+        }
+
         #endregion get/set
 
         #region ctor
 
-        public QuoteSearchFilter ( string isin )
+        public QuoteSearchFilter ( string isin, string? mic = null, DateTime? from = null, DateTime? to = null, Sorting sorting = Sorting.None)
         {
             this.Isin = isin;
+            this.Mic = mic;
+            this.From = from;
+            this.To = to;
+            this.Sorting = sorting;
         }
 
         #endregion ctor

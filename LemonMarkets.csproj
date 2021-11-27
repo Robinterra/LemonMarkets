@@ -9,9 +9,4 @@
     <PackageReference Include="Skender.Stock.Indicators" Version="1.14.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Extensions" />
-    <Folder Include="Extensions\" />
-  </ItemGroup>
-
 </Project>
