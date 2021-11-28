@@ -44,6 +44,7 @@ namespace LemonMarkets.Repos.V1
         public Task<LemonResult?> ActivateAsync(RequestActivateOrder request)
         {
             string route = $"orders/{request.OrderId}/activate";
+            if ( request.Pin == null ) return this.tradingApi.PostAsync<LemonResult> ( route );
 
             return this.tradingApi.PostAsync<RequestActivateOrder, LemonResult>(request, route);
         }

@@ -433,6 +433,28 @@ namespace WsApiCore
                 return default(B);
             }
         }
+        
+        public async Task<B?> PostAsync<B>(string route)
+        {
+            string apiPath = $"{this.ApiPath}/{route}";
+
+            try
+            {
+                if (this.beforeConnectToWebservice != null) if (!this.beforeConnectToWebservice(this)) return default(B);
+
+                HttpResponseMessage httpResponse = await this.client.PostAsync(apiPath, null);
+
+                if (this.httpCode != null) this.httpCode(httpResponse.StatusCode);
+
+                if (!httpResponse.IsSuccessStatusCode) return default(B);
+
+                return await httpResponse.Content.ReadFromJsonAsync<B>();
+            }
+            catch (Exception e)
+            {
+                return default(B);
+            }
+        }
 
         private B PostDataFromQuery<T, B>(string query, T data)
         {
