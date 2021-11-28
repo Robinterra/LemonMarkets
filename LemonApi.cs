@@ -90,7 +90,7 @@ namespace LemonMarkets
             this.Orders = new OrdersRepo(this.TradingApi);
             this.Spaces = new SpaceRepo ( this.TradingApi );
             this.Quotes = new QuotesRepo ( this.MarketDataApi );
-            this.Portfolio = new PortfolioRepo ();
+            this.Portfolio = new PortfolioRepo (this.TradingApi);
         }
 
         #endregion ctor
