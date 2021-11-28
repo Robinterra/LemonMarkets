@@ -9,7 +9,9 @@ namespace lemon.LemonMarkets.Interfaces
     public interface ITransactionsRepo
     {
 
-        Task<LemonResults<string, PortfolioEntry>?> GetAsync ( RequestGetPortfolio? request = null );
+        Task<LemonResults<Transaction>?> GetAsync ( RequestGetTransactions? request = null );
+
+        Task<LemonResult<Transaction>?> GetAsync ( string id );
 
     }
 
