@@ -79,6 +79,11 @@ namespace LemonMarkets
         {
             get;
         }
+        
+        public IInstrumentsRepo Instruments
+        {
+            get;
+        }
 
         #endregion get/set
 
@@ -103,6 +108,7 @@ namespace LemonMarkets
             this.Portfolio = new PortfolioRepo (this.TradingApi);
             this.Transactions = new TransactionsRepo ( this.TradingApi );
             this.Venues = new VenuesRepo (this.MarketDataApi);
+            this.Instruments = new InstrumentsRepo ( this.MarketDataApi );
         }
 
         #endregion ctor

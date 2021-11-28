@@ -46,5 +46,10 @@ namespace LemonMarkets.Interfaces
             get;
         }
 
+        IInstrumentsRepo Instruments
+        {
+            get;
+        }
+
     }
 }

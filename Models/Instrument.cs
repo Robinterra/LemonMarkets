@@ -36,26 +36,13 @@ namespace LemonMarkets.Models
             get; set;
         }
 
-        [JsonPropertyName("type")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public InstrumentType InstrumentType
+        public InstrumentType Type
         {
             get; set;
         }
 
-        [JsonPropertyName("currency")]
-        public string Currency
-        {
-            get; set;
-        }
-
-        [JsonPropertyName("tradable")]
-        public bool Tradable
-        {
-            get; set;
-        }
-
-        [JsonPropertyName("trading_venues")]
+        [JsonPropertyName("venues")]
         public List<TradingVenue> TradingVenues
         {
             get; set;
@@ -75,6 +62,31 @@ namespace LemonMarkets.Models
         public string Mic
         {
             get; set;
+        }
+
+        public string Name
+        {
+            get;
+            set;
+        }
+
+        public bool Tradable
+        {
+            get;
+            set;
+        }
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public Currency Currency
+        {
+            get;
+            set;
+        }
+
+        public bool Is_open
+        {
+            get;
+            set;
         }
     }
 
