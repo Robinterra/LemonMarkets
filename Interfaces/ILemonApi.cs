@@ -31,5 +31,10 @@ namespace LemonMarkets.Interfaces
             get;
         }
 
+        IPortfolioRepo Portfolio
+        {
+            get;
+        }
+
     }
 }

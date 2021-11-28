@@ -65,6 +65,16 @@ namespace LemonMarkets
             get;
         }
 
+        public IPortfolioRepo Portfolio
+        {
+            get;
+        }
+
+        public ITransactionsRepo Transactions
+        {
+            get;
+        }
+
         #endregion get/set
 
         #region ctor
@@ -85,6 +95,8 @@ namespace LemonMarkets
             this.Orders = new OrdersRepo(this.TradingApi);
             this.Spaces = new SpaceRepo ( this.TradingApi );
             this.Quotes = new QuotesRepo ( this.MarketDataApi );
+            this.Portfolio = new PortfolioRepo (this.TradingApi);
+            this.Transactions = new TransactionsRepo ( this.TradingApi );
         }
 
         #endregion ctor
