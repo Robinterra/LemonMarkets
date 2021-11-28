@@ -241,15 +241,14 @@ namespace WsApiCore
         }
 
         #region PutData
-        
-        
+
         public async Task<B?> PutAsync<T, B> ( T data, string route )
         {
             string apiPath = $"{this.ApiPath}/{route}";
 
             if (this.beforeConnectToWebservice != null) if (!this.beforeConnectToWebservice(this)) return default(B);
 
-            HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync<T>(apiPath, data);
+            HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync<T>(apiPath, data);
 
             if (this.httpCode != null) this.httpCode(httpResponse.StatusCode);
 

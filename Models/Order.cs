@@ -6,72 +6,99 @@ namespace LemonMarkets.Models
 {
     public class Order
     {
-        [JsonPropertyName("instrument")] 
-        public InstrumentShort Instrument
+        /// <summary>
+        /// International Securities Identification Number of instrument
+        /// </summary>
+        public string Isin
         {
             get; set;
         }
 
-        //[JsonConverter(typeof(DoubleDateTimeJsonConverter))]
-        [JsonPropertyName("valid_until")]
-        public DateTime ValidUntil
+        /// <summary>
+        /// Timestamp of point in time until order is valid.
+        /// </summary>
+        public DateTime Expires_at
         {
             get; set;
         }
 
+        /// <summary>
+        /// Either "buy" or "sell"
+        /// </summary>
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        [JsonPropertyName("side")]
         public OrderSide Side
         {
             get; set;
         }
 
-        [JsonPropertyName("quantity")] 
+        /// <summary>
+        /// Amount of instruments you specified for order.
+        /// </summary>
         public int Quantity
         {
             get; set;
         }
 
-        [JsonPropertyName("stop_price")] 
-        public double? StopPrice
+        /// <summary>
+        /// Stop price for order. "null" if not specified.
+        /// </summary>
+        public int? Stop_price
         {
             get; set;
         }
 
-        [JsonPropertyName("limit_price")] 
-        public double? LimitPrice
+        /// <summary>
+        /// Limit price for order. "null" if not specified.
+        /// </summary>
+        public int? Limit_price
         {
             get; set;
         }
 
-        [JsonPropertyName("uuid")] 
-        public string Uuid
+        /// <summary>
+        /// Order id
+        /// </summary>
+        public string Id
         {
             get; set;
         }
 
+        /// <summary>
+        /// ID of space you want to place the order with
+        /// </summary>
+        public string Space_id
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Market Identifier Code for trading venue the order was placed at.
+        /// </summary>
+        public string Venue
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Order status.
+        /// </summary>
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        [JsonPropertyName("status")]
         public OrderStatus Status
         {
             get; set;
         }
 
-        [JsonPropertyName("average_price")] 
-        public double? AveragePrice
-        {
-            get; set;
-        }
-
-        //[JsonConverter(typeof(DoubleDateTimeJsonConverter))]
-        [JsonPropertyName("created_at")]
-        public DateTime CreatedAt
+        /// <summary>
+        /// Estimation from our end for what price the Order will be executed
+        /// </summary>
+        public int Estimated_price
         {
             get; set;
         }
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        [JsonPropertyName("type")]
         public OrderType Type
         {
             get; set;

@@ -6,10 +6,10 @@ namespace LemonMarkets.Models.Enums
 {
     public enum OrderType
     {
-        All = 0,
-        Limit = 1,
-        Market = 2,
-        Stop_Limit = 3,
-        Stop_Market = 4
+        All,
+        Limit,
+        Market,
+        Stop_Limit,
+        Stop_Market
     }
 }
