@@ -34,7 +34,7 @@ namespace LemonMarkets.Models
         /// <summary>
         /// Amount of instruments you specified for order.
         /// </summary>
-        public int Quantity
+        public int? Quantity
         {
             get; set;
         }
@@ -93,7 +93,7 @@ namespace LemonMarkets.Models
         /// <summary>
         /// Estimation from our end for what price the Order will be executed
         /// </summary>
-        public int Estimated_price
+        public int? Estimated_price
         {
             get; set;
         }
@@ -112,7 +112,7 @@ namespace LemonMarkets.Models
         }
 
         [JsonPropertyName("processed_quantity")] 
-        public int ProcessedQuantity
+        public int? ProcessedQuantity
         {
             get; set;
         }
