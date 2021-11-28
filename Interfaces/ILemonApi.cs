@@ -36,5 +36,20 @@ namespace LemonMarkets.Interfaces
             get;
         }
 
+        ITransactionsRepo Transactions
+        {
+            get;
+        }
+
+        IVenuesRepo Venues
+        {
+            get;
+        }
+
+        IInstrumentsRepo Instruments
+        {
+            get;
+        }
+
     }
 }
