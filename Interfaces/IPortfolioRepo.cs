@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using LemonMarkets.Models;
 using LemonMarkets.Models.Requests.Trading;
 using LemonMarkets.Models.Responses;
@@ -9,7 +10,7 @@ namespace lemon.LemonMarkets.Interfaces
     public interface IPortfolioRepo
     {
 
-        Task<LemonResults<string, PortfolioEntry>?> GetAsync ( RequestGetPortfolio? request = null );
+        Task<LemonResults<string, Dictionary<string, PortfolioEntry>>?> GetAsync ( RequestGetPortfolio? request = null );
 
     }
 
