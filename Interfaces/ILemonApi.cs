@@ -51,5 +51,10 @@ namespace LemonMarkets.Interfaces
             get;
         }
 
+        IOpenHighLowCloseRepo OHLC
+        {
+            get;
+        }
+
     }
 }
