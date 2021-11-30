@@ -114,7 +114,7 @@ namespace LemonMarkets
             this.Transactions = new TransactionsRepo ( this.TradingApi );
             this.Venues = new VenuesRepo (this.MarketDataApi);
             this.Instruments = new InstrumentsRepo ( this.MarketDataApi );
-            this.OHLC = new OpenHighLowCloseRepo();
+            this.OHLC = new OpenHighLowCloseRepo(this.MarketDataApi);
         }
 
         #endregion ctor
