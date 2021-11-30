@@ -85,6 +85,11 @@ namespace LemonMarkets
             get;
         }
 
+        public IOpenHighLowCloseRepo OHLC
+        {
+            get;
+        }
+
         #endregion get/set
 
         #region ctor
@@ -109,6 +114,7 @@ namespace LemonMarkets
             this.Transactions = new TransactionsRepo ( this.TradingApi );
             this.Venues = new VenuesRepo (this.MarketDataApi);
             this.Instruments = new InstrumentsRepo ( this.MarketDataApi );
+            this.OHLC = new OpenHighLowCloseRepo(this.MarketDataApi);
         }
 
         #endregion ctor
