@@ -10,7 +10,7 @@ namespace lemon.LemonMarkets.Interfaces
     public interface IPortfolioRepo
     {
 
-        Task<LemonResults<string, Dictionary<string, PortfolioEntry>>?> GetAsync ( RequestGetPortfolio? request = null );
+        Task<LemonResults<PortfolioEntry>?> GetAsync ( RequestGetPortfolio? request = null );
 
     }
 
