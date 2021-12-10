@@ -8,6 +8,12 @@ namespace LemonMarkets.Models
 
         #region get/set
 
+        public string? Isin
+        {
+            get;
+            set;
+        }
+
         /// <summary>
         /// Number of current Instrument items in your Portfolio
         /// </summary>
