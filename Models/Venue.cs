@@ -14,7 +14,7 @@ namespace LemonMarkets.Models
         /// <summary>
         /// Name of Trading Venue
         /// </summary>
-        public string Name
+        public string? Name
         {
             get;
             set;
@@ -23,7 +23,7 @@ namespace LemonMarkets.Models
         /// <summary>
         /// Title of Trading Venue
         /// </summary>
-        public string Title
+        public string? Title
         {
             get;
             set;
@@ -32,7 +32,7 @@ namespace LemonMarkets.Models
         /// <summary>
         /// Market Identifier Code of Trading Venue
         /// </summary>
-        public string Mic
+        public string? Mic
         {
             get;
             set;
@@ -47,7 +47,7 @@ namespace LemonMarkets.Models
             set;
         }
 
-        public OpeningHours Opening_hours
+        public OpeningHours? Opening_hours
         {
             get;
             set;
@@ -56,7 +56,7 @@ namespace LemonMarkets.Models
         /// <summary>
         /// List of days the Trading Venue is open at
         /// </summary>
-        public List<DateTime> Opening_days
+        public List<DateTime>? Opening_days
         {
             get;
             set;
@@ -91,7 +91,7 @@ namespace LemonMarkets.Models
         /// <summary>
         /// Timezone the Opening Hours are returned in
         /// </summary>
-        public string Timezone
+        public string? Timezone
         {
             get;
             set;

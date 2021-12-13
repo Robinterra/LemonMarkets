@@ -13,7 +13,7 @@ namespace LemonMarkets.Models
         /// <summary>
         /// ID of transaction
         /// </summary>
-        public string Id
+        public string? Id
         {
             get;
             set;
@@ -22,7 +22,7 @@ namespace LemonMarkets.Models
         /// <summary>
         /// ID of related account
         /// </summary>
-        public string Account_id
+        public string? Account_id
         {
             get;
             set;
@@ -31,7 +31,7 @@ namespace LemonMarkets.Models
         /// <summary>
         /// ID of related space
         /// </summary>
-        public string Space_id
+        public string? Space_id
         {
             get;
             set;
@@ -40,7 +40,7 @@ namespace LemonMarkets.Models
         /// <summary>
         /// ID of related order
         /// </summary>
-        public string Order_id
+        public string? Order_id
         {
             get;
             set;
@@ -68,7 +68,7 @@ namespace LemonMarkets.Models
         /// <summary>
         /// Related instrument of transaction
         /// </summary>
-        public string Isin
+        public string? Isin
         {
             get;
             set;

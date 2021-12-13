@@ -30,7 +30,7 @@ namespace LemonMarkets.Models
         }
 
         [JsonPropertyName("t")]
-        public string Timestamp
+        public string? Timestamp
         {
             get; set;
         }
@@ -42,7 +42,7 @@ namespace LemonMarkets.Models
         }
 
         [JsonIgnore]
-        public string Symbol
+        public string? Symbol
         {
             get; set;
         }

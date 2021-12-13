@@ -17,7 +17,7 @@ namespace LemonMarkets.Models.Responses
             set;
         }
 
-        public string Status
+        public string? Status
         {
             get;
             set;

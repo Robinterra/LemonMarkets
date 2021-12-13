@@ -7,24 +7,24 @@ using System.Threading.Tasks;
 
 namespace LemonMarkets.Models.Responses
 {
-    public class LemonResults<T,B> : LemonResult
+    public class LemonResults<T,B> : LemonResult where T : notnull
     {
         #region get/set
 
         [JsonPropertyName("previous")]
-        public string Previous
+        public string? Previous
         {
             get; set;
         }
 
         [JsonPropertyName("next")]
-        public string Next
+        public string? Next
         {
             get; set;
         }
 
         [JsonPropertyName("results")]
-        public Dictionary<T, B> Results
+        public Dictionary<T, B>? Results
         {
             get; set;
         }

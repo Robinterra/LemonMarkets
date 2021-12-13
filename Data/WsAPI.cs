@@ -119,7 +119,7 @@ namespace WsApiCore
             set;
         }
 
-        public string Version
+        public string? Version
         {
             get
             {
@@ -202,11 +202,11 @@ namespace WsApiCore
         {
             HttpClientHandler httpClientHandler = new HttpClientHandler();
 
-            httpClientHandler.ServerCertificateCustomValidationCallback = this.CheckCert;
+            httpClientHandler.ServerCertificateCustomValidationCallback = this.CheckCert!;
 
             if (this.CheckCertificate == null) return httpClientHandler;
 
-            httpClientHandler.ServerCertificateCustomValidationCallback = this.CheckCertificate;
+            httpClientHandler.ServerCertificateCustomValidationCallback = this.CheckCertificate!;
 
             return httpClientHandler;
         }
@@ -257,19 +257,19 @@ namespace WsApiCore
             return await httpResponse.Content.ReadFromJsonAsync<B>();
         }
 
-        public T PutData<T>(T data) where T : IModelElement
+        public T? PutData<T>(T data) where T : IModelElement
         {
             return this.PutDataFromQuery<T>($"{ApiPath}/{data.Id}", data);
         }
 
-        public T PutData<T>(T data, params object[] header)
+        public T? PutData<T>(T data, params object[] header)
         {
             string query = this.GetQuerryFromParams(header);
 
             return this.PutDataFromQuery<T>(query, data);
         }
 
-        private T PutDataFromQuery<T>(string query, T data)
+        private T? PutDataFromQuery<T>(string query, T data)
         {
             try
             {
@@ -289,19 +289,19 @@ namespace WsApiCore
             }
         }
 
-        public B PutData<T, B>(T data, params object[] header)
+        public B? PutData<T, B>(T data, params object[] header)
         {
             string query = this.GetQuerryFromParams(header);
 
             return this.PutDataFromQuery<T, B>(query, data);
         }
 
-        public B PutData<T, B>(T data)
+        public B? PutData<T, B>(T data)
         {
             return this.PutDataFromQuery<T, B>($"{ApiPath}", data);
         }
 
-        private B PutDataFromQuery<T, B>(string query, T data)
+        private B? PutDataFromQuery<T, B>(string query, T data)
         {
             try
             {
@@ -325,7 +325,7 @@ namespace WsApiCore
 
         #region PostData
 
-        public B UploadFile<B>(string route, List<FileUploadRequest> files)
+        public B? UploadFile<B>(string route, List<FileUploadRequest> files)
         {
             try
             {
@@ -352,13 +352,13 @@ namespace WsApiCore
 
                 return httpResponse.Content.ReadFromJsonAsync<B>().Result;
             }
-            catch (Exception e)
+            catch
             {
                 return default(B);
             }
         }
 
-        public B DownloadFile<T, B>(T data, string route) where B : IResponseFileDownload, new()
+        public B? DownloadFile<T, B>(T data, string route) where B : IResponseFileDownload, new()
         {
             string query = $"{this.ApiPath}/{route}";
 
@@ -372,11 +372,12 @@ namespace WsApiCore
 
                 if (!httpResponse.IsSuccessStatusCode) return default(B);
 
-                IEnumerable<string> values;
+                IEnumerable<string>? values;
 
                 httpResponse.Content.Headers.TryGetValues("Content-Type", out values);
+                if (values == null) return httpResponse.Content.ReadFromJsonAsync<B>().Result;
 
-                string value = values.FirstOrDefault();
+                string? value = values.FirstOrDefault();
 
                 if (value != "APPLICATION/octet-stream") return httpResponse.Content.ReadFromJsonAsync<B>().Result;
 
@@ -387,7 +388,7 @@ namespace WsApiCore
 
                 return result;
             }
-            catch (Exception e)
+            catch
             {
                 return default(B);
             }
@@ -398,7 +399,7 @@ namespace WsApiCore
             return this.PostDataFromQuery<T>(this.ApiPath, data);
         }
 
-        public B PostData<T, B>(T data)
+        public B? PostData<T, B>(T data)
         {
             return this.PostDataFromQuery<T, B>(this.ApiPath, data);
         }
@@ -428,7 +429,7 @@ namespace WsApiCore
 
                 return await httpResponse.Content.ReadFromJsonAsync<B>();
             }
-            catch (Exception e)
+            catch
             {
                 return default(B);
             }
@@ -450,13 +451,13 @@ namespace WsApiCore
 
                 return await httpResponse.Content.ReadFromJsonAsync<B>();
             }
-            catch (Exception e)
+            catch
             {
                 return default(B);
             }
         }
 
-        private B PostDataFromQuery<T, B>(string query, T data)
+        private B? PostDataFromQuery<T, B>(string query, T data)
         {
             try
             {
@@ -470,7 +471,7 @@ namespace WsApiCore
 
                 return httpResponse.Content.ReadFromJsonAsync<B>().Result;
             }
-            catch (Exception e)
+            catch
             {
                 return default(B);
             }
@@ -499,17 +500,17 @@ namespace WsApiCore
 
         #region GetData
 
-        public T GetData<T>()
+        public T? GetData<T>()
         {
             return this.GetDataFromQuery<T>(this.ApiPath);
         }
 
-        public async Task<T> GetAsync<T>()
+        public Task<T?> GetAsync<T>()
         {
-            return await this.GetDataFromQueryAsync<T>(this.ApiPath);
+            return this.GetDataFromQueryAsync<T>(this.ApiPath);
         }
 
-        public T GetData<T>(params object[] header)
+        public T? GetData<T>(params object[] header)
         {
             string query = this.ApiPath;
 
@@ -532,7 +533,8 @@ namespace WsApiCore
                 sb.Append($"/{elem}");
             }
 
-            Stream stream = await this.GetStreamFromQueryAsync(sb.ToString());
+            Stream? stream = await this.GetStreamFromQueryAsync(sb.ToString());
+            if (stream == null) throw new Exception();
 
             IAsyncEnumerable<T?> enumarble = JsonSerializer.DeserializeAsyncEnumerable<T>(stream, new JsonSerializerOptions { PropertyNameCaseInsensitive = true, DefaultBufferSize = 128 });
 
@@ -542,7 +544,7 @@ namespace WsApiCore
             }
         }
 
-        private async Task<Stream> GetStreamFromQueryAsync(string query)
+        private async Task<Stream?> GetStreamFromQueryAsync(string query)
         {
             if (this.beforeConnectToWebservice != null) if (!this.beforeConnectToWebservice(this)) return null;
 
@@ -582,7 +584,7 @@ namespace WsApiCore
             return await httpResponse.Content.ReadFromJsonAsync<T>();
         }
 
-        private T GetDataFromQuery<T>(string query)
+        private T? GetDataFromQuery<T>(string query)
         {
             try
             {
@@ -596,7 +598,7 @@ namespace WsApiCore
 
                 return httpResponse.Content.ReadFromJsonAsync<T>().Result;
             }
-            catch (Exception e)
+            catch
             {
                 return default(T);
             }
@@ -632,12 +634,12 @@ namespace WsApiCore
             return await httpResponse.Content.ReadFromJsonAsync<T>();
         }
 
-        public T Delete<T>()
+        public T? Delete<T>()
         {
             return this.DeleteFromQuery<T>(this.ApiPath);
         }
 
-        public T Delete<T>(params object[] header)
+        public T? Delete<T>(params object[] header)
         {
             string query = this.ApiPath;
 
@@ -649,7 +651,7 @@ namespace WsApiCore
             return this.DeleteFromQuery<T>(query);
         }
 
-        private T DeleteFromQuery<T>(string query)
+        private T? DeleteFromQuery<T>(string query)
         {
             try
             {
@@ -663,7 +665,7 @@ namespace WsApiCore
 
                 return httpResponse.Content.ReadFromJsonAsync<T>().Result;
             }
-            catch (Exception e)
+            catch
             {
                 return default(T);
             }

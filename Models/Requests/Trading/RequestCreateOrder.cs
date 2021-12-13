@@ -87,7 +87,7 @@ namespace LemonMarkets.Models.Requests.Trading
         /// <summary>
         /// Your personal Notes you wish to attach to the Order
         /// </summary>
-        public string Notes
+        public string? Notes
         {
             get;
         }
@@ -96,7 +96,7 @@ namespace LemonMarkets.Models.Requests.Trading
 
         #region ctor
 
-        public RequestCreateOrder(string isin, DateTime expires, OrderSide side, int quantity, string venue, string spaceId, decimal? stop = null, decimal? limit = null, string notes = null)
+        public RequestCreateOrder(string isin, DateTime expires, OrderSide side, int quantity, string venue, string spaceId, decimal? stop = null, decimal? limit = null, string? notes = null)
         {
             this.Isin = isin;
             this.Expires_at = expires;

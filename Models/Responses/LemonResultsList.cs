@@ -9,19 +9,19 @@ namespace LemonMarkets.Models.Responses
         #region get/set
 
         [JsonPropertyName("previous")]
-        public string Previous
+        public string? Previous
         {
             get; set;
         }
 
         [JsonPropertyName("next")]
-        public string Next
+        public string? Next
         {
             get; set;
         }
 
         [JsonPropertyName("results")]
-        public List<T> Results
+        public List<T>? Results
         {
             get; set;
         }
