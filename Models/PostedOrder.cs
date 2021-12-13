@@ -7,7 +7,7 @@ namespace LemonMarkets.Models
     public class PostedOrder
     {
         [JsonPropertyName("isin")] 
-        public string Isin
+        public string? Isin
         {
             get; set;
         }
@@ -45,7 +45,7 @@ namespace LemonMarkets.Models
         }
 
         [JsonPropertyName("uuid")] 
-        public string Uuid
+        public string? Uuid
         {
             get; set;
         }

@@ -27,7 +27,7 @@ namespace LemonMarkets.Models
         /// <summary>
         /// Specify the ISIN you are interested in. You can also specify multiple ISINs. Maximum 10 ISINs per Request.
         /// </summary>
-        public string? Isin
+        public List<string> Isins
         {
             get;
         }
@@ -52,9 +52,13 @@ namespace LemonMarkets.Models
 
         #region ctor
 
-        public InstrumentSearchFilter ( string? isin = null, string? mic = null, Currency currency = Currency.None, bool? isTradable = null, string? search = null )
+        public InstrumentSearchFilter ( string? isin = null, string? mic = null, Currency currency = Currency.None, bool? isTradable = null, string? search = null, List<string>? isins = null)
         {
-            this.Isin = isin;
+            if (isins != null) this.Isins = isins;
+            else this.Isins = new List<string>();
+
+            if (isin != null) this.Isins.Add(isin);
+
             this.Currency = currency;
             this.IsTradable = isTradable;
             this.Search = search;

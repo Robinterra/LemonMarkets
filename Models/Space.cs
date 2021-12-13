@@ -5,11 +5,11 @@ namespace LemonMarkets.Models
 {
     public class Space
     {
-        
+
         /// <summary>
         /// Space ID
         /// </summary>
-        public string Id
+        public string? Id
         {
             get; set;
         }
@@ -17,7 +17,7 @@ namespace LemonMarkets.Models
         /// <summary>
         /// Name of Space
         /// </summary>
-        public string Name
+        public string? Name
         {
             get; set;
         }
@@ -25,7 +25,7 @@ namespace LemonMarkets.Models
         /// <summary>
         /// Description of Space
         /// </summary>
-        public string Description
+        public string? Description
         {
             get;
             set;
@@ -80,7 +80,7 @@ namespace LemonMarkets.Models
         /// <summary>
         /// Real Money Spaces only: potential linked Paper Money Space
         /// </summary>
-        public string Linked
+        public string? Linked
         {
             get;
             set;

@@ -9,7 +9,7 @@ namespace LemonMarkets.Models
         /// <summary>
         /// International Securities Identification Number of instrument
         /// </summary>
-        public string Isin
+        public string? Isin
         {
             get; set;
         }
@@ -58,7 +58,7 @@ namespace LemonMarkets.Models
         /// <summary>
         /// Order id
         /// </summary>
-        public string Id
+        public string? Id
         {
             get; set;
         }
@@ -66,7 +66,7 @@ namespace LemonMarkets.Models
         /// <summary>
         /// ID of space you want to place the order with
         /// </summary>
-        public string Space_id
+        public string? Space_id
         {
             get;
             set;
@@ -75,7 +75,7 @@ namespace LemonMarkets.Models
         /// <summary>
         /// Market Identifier Code for trading venue the order was placed at.
         /// </summary>
-        public string Venue
+        public string? Venue
         {
             get;
             set;
@@ -121,13 +121,13 @@ namespace LemonMarkets.Models
     public class InstrumentShort
     {
         [JsonPropertyName("title")] 
-        public string Title
+        public string? Title
         {
             get; set;
         }
 
         [JsonPropertyName("isin")] 
-        public string Isin
+        public string? Isin
         {
             get; set;
         }

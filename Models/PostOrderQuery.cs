@@ -5,9 +5,9 @@ namespace LemonMarkets.Models
 {
     public class PostOrderQuery
     {
-        public string SpaceUuid { get; set; }
+        public string? SpaceUuid { get; set; }
 
-        public string Isin { get; set; }
+        public string? Isin { get; set; }
 
         public DateTime ValidUntil { get; set; }
 

@@ -17,7 +17,7 @@ namespace LemonMarkets.Models.Requests.Trading
             set;
         }
 
-        public string Pin
+        public string? Pin
         {
             get;
             set;
@@ -27,7 +27,7 @@ namespace LemonMarkets.Models.Requests.Trading
 
         #region ctor
 
-        public RequestActivateOrder(string orderId, string pin = null)
+        public RequestActivateOrder(string orderId, string? pin = null)
         {
             this.OrderId = orderId;
             this.Pin = pin;

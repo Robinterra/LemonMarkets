@@ -7,7 +7,7 @@ namespace LemonMarkets.Models
     public class Quote
     {
 
-        public string Isin
+        public string? Isin
         {
             get;
             set;
@@ -48,7 +48,7 @@ namespace LemonMarkets.Models
             set;
         }
 
-        public string Mic
+        public string? Mic
         {
             get;
             set;

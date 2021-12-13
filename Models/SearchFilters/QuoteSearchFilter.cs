@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using LemonMarkets.Models.Enums;
 
@@ -14,7 +15,7 @@ namespace LemonMarkets.Models
         /// The ISIN of the instrument you want to get the quotes for. You can also specify multiple ISINs. Maximum 10 ISINs per request.
         /// </summary>
         [Required]
-        public string Isin
+        public List<string> Isins
         {
             get;
         }
@@ -55,9 +56,18 @@ namespace LemonMarkets.Models
 
         #region ctor
 
-        public QuoteSearchFilter ( string isin, string? mic = null, DateTime? from = null, DateTime? to = null, Sorting sorting = Sorting.None)
+        public QuoteSearchFilter ( string isin, string? mic = null, DateTime? from = null, DateTime? to = null, Sorting sorting = Sorting.None )
         {
-            this.Isin = isin;
+            this.Isins = new() { isin };
+            this.Mic = mic;
+            this.From = from;
+            this.To = to;
+            this.Sorting = sorting;
+        }
+
+        public QuoteSearchFilter ( List<string> isins, string? mic = null, DateTime? from = null, DateTime? to = null, Sorting sorting = Sorting.None )
+        {
+            this.Isins = isins;
             this.Mic = mic;
             this.From = from;
             this.To = to;

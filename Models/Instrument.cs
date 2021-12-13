@@ -7,31 +7,31 @@ namespace LemonMarkets.Models
     public class Instrument
     {
         [JsonPropertyName("isin")]
-        public string ISIN
+        public string? ISIN
         {
             get; set;
         }
 
         [JsonPropertyName("wkn")]
-        public string WKN
+        public string? WKN
         {
             get; set;
         }
 
         [JsonPropertyName("name")]
-        public string Name
+        public string? Name
         {
             get; set;
         }
 
         [JsonPropertyName("title")]
-        public string Title
+        public string? Title
         {
             get; set;
         }
 
         [JsonPropertyName("symbol")]
-        public string Symbol
+        public string? Symbol
         {
             get; set;
         }
@@ -53,18 +53,18 @@ namespace LemonMarkets.Models
     public class TradingVenue
     {
         [JsonPropertyName("title")]
-        public string Title
+        public string? Title
         {
             get; set;
         }
 
         [JsonPropertyName("mic")]
-        public string Mic
+        public string? Mic
         {
             get; set;
         }
 
-        public string Name
+        public string? Name
         {
             get;
             set;

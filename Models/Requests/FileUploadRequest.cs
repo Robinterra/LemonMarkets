@@ -8,19 +8,19 @@ namespace WsApiCore
     public class FileUploadRequest
     {
 
-        public FileInfo File
+        public FileInfo? File
         {
             get;
             set;
         }
 
-        public string FileName
+        public string? FileName
         {
             get;
             set;
         }
 
-        public string Name
+        public string? Name
         {
             get;
             set;

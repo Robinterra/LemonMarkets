@@ -12,7 +12,7 @@ namespace LemonMarkets.Models
         /// <summary>
         /// ISIN of instrument you want to retrieve the OHLC data for
         /// </summary>
-        public string Isin
+        public string? Isin
         {
             get;
             set;
@@ -71,7 +71,7 @@ namespace LemonMarkets.Models
         /// <summary>
         /// Market Identifier Code of Trading Venue the OHLC data occured at
         /// </summary>
-        public string Mic
+        public string? Mic
         {
             get;
             set;

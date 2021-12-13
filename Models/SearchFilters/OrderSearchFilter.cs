@@ -1,48 +1,73 @@
 ﻿using System;
+using System.Collections.Generic;
 using LemonMarkets.Models.Enums;
 
 namespace LemonMarkets.Models
 {
     public class OrderSearchFilter
     {
+
+        #region get/set
+
         public string? SpaceUuid
         {
-            get; set;
+            get;
         }
 
         public OrderSide Side
         {
-            get; set;
+            get;
         }
 
         public DateTime? From
         {
-            get; set;
+            get;
         }
 
         public DateTime? To
         {
-            get; set;
+            get;
         }
 
         public OrderType Type
         {
-            get; set;
+            get;
         }
 
         public OrderStatus Status
         {
-            get; set;
+            get;
         }
 
         public bool WithPaging
         {
-            get; set;
+            get;
         }
 
-        public string? Isin
+        public List<string> Isins
         {
-            get; set;
+            get;
         }
+
+        #endregion get/set
+
+        #region ctor
+
+        public OrderSearchFilter(List<string>? isins = null, string? isin = null, OrderStatus orderStatus = OrderStatus.All, OrderType orderType = OrderType.All, OrderSide orderSide = OrderSide.All, string? spaceId = null, DateTime? to = null, DateTime? from = null)
+        {
+            if (isins != null) this.Isins = isins;
+            else this.Isins = new List<string>();
+
+            if (isin != null) this.Isins.Add(isin);
+            this.Status = orderStatus;
+            this.Type = orderType;
+            this.Side = orderSide;
+            this.From = from;
+            this.To = to;
+            this.SpaceUuid = spaceId;
+        }
+
+        #endregion ctor
+
     }
 }
