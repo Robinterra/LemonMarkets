@@ -65,7 +65,7 @@ namespace LemonMarkets.Repos.V1
 
             if (request.From != null) param.Add($"from={request.From}");
             if (request.To != null) param.Add($"to={request.To}");
-            if (request.Isin != null) param.Add($"isin={request.Isin}");
+            if (request.Isins.Count != 0) param.Add($"isin={string.Join(',', request.Isins)}");
             if (request.SpaceUuid != null) param.Add($"space_id={request.SpaceUuid}");
             if (request.Side != OrderSide.All) param.Add($"side={request.Side.ToString().ToLower()}");
             if (request.Type != OrderType.All) param.Add($"type={request.Type.ToString().ToLower()}");

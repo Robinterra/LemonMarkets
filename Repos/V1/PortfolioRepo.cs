@@ -37,7 +37,7 @@ namespace LemonMarkets.Repos.V1
 
             List<string> param = new List<string>();
 
-            if (request.Isin != null) param.Add($"isin={request.Isin}");
+            if (request.Isins.Count != 0) param.Add($"isin={string.Join(',', request.Isins)}");
             if (request.Space_id != null) param.Add($"space_id={request.Space_id}");
 
             if (param.Count == 0) return this.tradingApi.GetAsync<LemonResults<PortfolioEntry>> ("portfolio");

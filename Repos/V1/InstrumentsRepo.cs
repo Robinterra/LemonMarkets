@@ -37,7 +37,7 @@ namespace LemonMarkets.Repos.V1
             List<string> param = new List<string>();
 
             if (request.Mic != null) param.Add($"mic={request.Mic}");
-            if (request.Isin != null) param.Add($"isin={request.Isin}");
+            if (request.Isins.Count != 0) param.Add($"isin={string.Join(',', request.Isins)}");
             if (request.Search != null) param.Add($"search={request.Search}");
             if (request.Currency != Currency.None) param.Add($"currency={request.Currency}");
             if (request.IsTradable != null) param.Add($"tradable={request.IsTradable}");

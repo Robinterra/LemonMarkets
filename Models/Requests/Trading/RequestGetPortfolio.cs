@@ -1,4 +1,6 @@
-﻿namespace LemonMarkets.Models.Requests.Trading
+﻿using System.Collections.Generic;
+
+namespace LemonMarkets.Models.Requests.Trading
 {
 
     public class RequestGetPortfolio
@@ -9,7 +11,7 @@
         /// <summary>
         /// Filter for a specific Instrument in your portfolio
         /// </summary>
-        public string? Isin
+        public List<string> Isins
         {
             get;
         }
@@ -23,9 +25,13 @@
 
         #region ctor
 
-        public RequestGetPortfolio ( string? isin = null, string? spaceId = null)
+        public RequestGetPortfolio ( string? isin = null, string? spaceId = null, List<string>? isins = null)
         {
-            this.Isin = isin;
+            if (isins != null) this.Isins = isins;
+            else this.Isins = new List<string>();
+
+            if (isin != null) this.Isins.Add(isin);
+
             this.Space_id = spaceId;
         }
 

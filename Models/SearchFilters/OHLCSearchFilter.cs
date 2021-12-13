@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using LemonMarkets.Models.Enums;
 
 namespace LemonMarkets.Models
@@ -12,7 +13,7 @@ namespace LemonMarkets.Models
         /// <summary>
         /// The ISIN of the instrument you want to get the OHLC data for. You can also specify multiple ISINs. Maximum 10 ISINs per request.
         /// </summary>
-        public string Isin
+        public List<string> Isins
         {
             get;
         }
@@ -61,9 +62,21 @@ namespace LemonMarkets.Models
 
         #region ctor
 
-        public OHLCSearchFilter ( string isin, OHLCTimeMode timeMode, string? mic = null, DateTime? from = null, DateTime? to = null, Sorting sorting = Sorting.None )
+        public OHLCSearchFilter ( string isin, OHLCTimeMode timeMode, string? mic = null, DateTime? from = null, DateTime? to = null, Sorting sorting = Sorting.None)
         {
-            this.Isin = isin;
+            this.Isins = new() { isin };
+
+            this.TimeMode = timeMode;
+            this.Mic = mic;
+            this.From = from;
+            this.To = to;
+            this.Sorting = sorting;
+        }
+
+        public OHLCSearchFilter ( List<string> isins, OHLCTimeMode timeMode, string? mic = null, DateTime? from = null, DateTime? to = null, Sorting sorting = Sorting.None )
+        {
+            this.Isins = isins;
+
             this.TimeMode = timeMode;
             this.Mic = mic;
             this.From = from;
