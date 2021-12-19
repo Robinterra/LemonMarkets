@@ -8,7 +8,28 @@ namespace LemonMarkets.Models
 
         #region get/set
 
+        /// <summary>
+        /// International Securities Identification Number of instrument
+        /// </summary>
         public string? Isin
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Identification Number of the space you placed the order with
+        /// </summary>
+        public string? Space_id
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Title of instrument
+        /// </summary>
+        public string? Isin_title
         {
             get;
             set;
