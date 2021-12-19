@@ -12,6 +12,7 @@
         Pay_out,
         Order_buy,
         Order_sell,
+        Eod_Balance,
         Dividend,
         Tax
 

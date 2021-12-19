@@ -11,8 +11,6 @@ namespace lemon.LemonMarkets.Interfaces
 
         Task<LemonResults<Transaction>?> GetAsync ( RequestGetTransactions? request = null );
 
-        Task<LemonResult<Transaction>?> GetAsync ( string id );
-
     }
 
 }

@@ -75,9 +75,18 @@ namespace LemonMarkets.Models
         }
 
         /// <summary>
-        /// Timestamp the Transaction was created at
+        /// Title of related International Securities Identification Number (ISIN). Only for type order_buy and order_sell, otherwise null
         /// </summary>
-        public DateTime Created_at
+        public string? Isin_title
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Date of bank statement (YYYY-MM-DD)
+        /// </summary>
+        public DateTime Date
         {
             get;
             set;
