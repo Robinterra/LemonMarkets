@@ -117,8 +117,13 @@ namespace LemonMarkets.Models
             get; set;
         }
 
-        [JsonPropertyName("processed_quantity")] 
-        public int? ProcessedQuantity
+        public int? Executed_price
+        {
+            get;
+            set;
+        }
+
+        public int? Executed_quantity
         {
             get; set;
         }
