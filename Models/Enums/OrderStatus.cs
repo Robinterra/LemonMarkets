@@ -14,6 +14,7 @@ namespace LemonMarkets.Models.Enums
         Executed,
         Deleted,
         Expired,
-        Open
+        Open,
+        Canceled
     }
 }
