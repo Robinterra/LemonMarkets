@@ -47,6 +47,12 @@ namespace LemonMarkets.Models
             get; set;
         }
 
+        public DateTime? Created_at
+        {
+            get;
+            set;
+        }
+
         /// <summary>
         /// Limit price for order. "null" if not specified.
         /// </summary>
@@ -116,6 +122,7 @@ namespace LemonMarkets.Models
         {
             get; set;
         }
+
     }
 
     public class InstrumentShort

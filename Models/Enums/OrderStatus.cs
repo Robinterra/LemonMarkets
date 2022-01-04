@@ -13,6 +13,7 @@ namespace LemonMarkets.Models.Enums
         In_Progress,
         Executed,
         Deleted,
-        Expired
+        Expired,
+        Open
     }
 }
