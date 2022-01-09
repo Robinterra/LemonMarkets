@@ -79,7 +79,12 @@ namespace LemonMarkets
         {
             get;
         }
-        
+
+        public IAccountRepo Account
+        {
+            get;
+        }
+
         public IInstrumentsRepo Instruments
         {
             get;
@@ -107,6 +112,7 @@ namespace LemonMarkets
             this.MarketDataApi.CheckCertEasy += Api_CheckCertEasy;
             this.MarketDataApi.SetNewAuth ( apiKey );
 
+            this.Account = new AccountRepo(this.TradingApi);
             this.Orders = new OrdersRepo(this.TradingApi);
             this.Spaces = new SpaceRepo ( this.TradingApi );
             this.Quotes = new QuotesRepo ( this.MarketDataApi );
