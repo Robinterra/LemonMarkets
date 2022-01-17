@@ -247,7 +247,7 @@ namespace WsApiCore
 
             apiResponse.SetHttpCode((int)statusCode);
 
-            apiResponse.SetIsSuccess(false);
+            apiResponse.SetIsSuccess(isSuccess);
 
             return result;
         }
