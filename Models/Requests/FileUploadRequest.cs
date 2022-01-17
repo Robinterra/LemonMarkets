@@ -8,23 +8,35 @@ namespace WsApiCore
     public class FileUploadRequest
     {
 
-        public FileInfo? File
+        #region get/set
+
+        public FileInfo File
         {
             get;
-            set;
         }
 
-        public string? FileName
+        public string FileName
         {
             get;
-            set;
         }
 
-        public string? Name
+        public string Name
         {
             get;
-            set;
         }
+
+        #endregion get/set
+
+        #region ctor
+
+        public FileUploadRequest(FileInfo file, string filename, string name)
+        {
+            this.File = file;
+            this.FileName = filename;
+            this.Name = name;
+        }
+
+        #endregion ctor
 
     }
 

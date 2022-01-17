@@ -16,13 +16,13 @@ namespace LemonMarkets.Repos.V1
 
         #region vars
 
-        private readonly WsAPICore tradingApi;
+        private readonly IApiClient tradingApi;
 
         #endregion vars
 
         #region ctor
 
-        public PortfolioRepo ( WsAPICore tradingApi )
+        public PortfolioRepo ( IApiClient tradingApi )
         {
             this.tradingApi = tradingApi;
         }

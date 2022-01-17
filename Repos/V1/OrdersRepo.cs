@@ -1,4 +1,5 @@
-﻿using LemonMarkets.Interfaces;
+﻿using lemon.LemonMarkets.Interfaces;
+using LemonMarkets.Interfaces;
 using LemonMarkets.Models;
 using LemonMarkets.Models.Enums;
 using LemonMarkets.Models.Requests.Trading;
@@ -16,13 +17,13 @@ namespace LemonMarkets.Repos.V1
 
         #region vars
 
-        private readonly WsAPICore tradingApi;
+        private readonly IApiClient tradingApi;
 
         #endregion vars
 
         #region ctor
 
-        public OrdersRepo(WsAPICore tradingApi)
+        public OrdersRepo(IApiClient tradingApi)
         {
             this.tradingApi = tradingApi;
         }
@@ -31,30 +32,12 @@ namespace LemonMarkets.Repos.V1
 
         #region methods
 
-        public LemonResult Activate(RequestActivateOrder request)
-        {
-            string route = $"orders/{request.OrderId}/activate";
-
-            LemonResult? response = this.tradingApi.PostData<RequestActivateOrder, LemonResult>(request, route);
-            if (response == null) return new LemonResult<Order>("response is null");
-
-            return response;
-        }
-
         public Task<LemonResult?> ActivateAsync(RequestActivateOrder request)
         {
             string route = $"orders/{request.OrderId}/activate";
             if ( request.Pin == null ) return this.tradingApi.PostAsync<LemonResult> ( route );
 
-            return this.tradingApi.PostAsync<RequestActivateOrder, LemonResult>(request, route);
-        }
-
-        public LemonResult<Order> Create(RequestCreateOrder request)
-        {
-            LemonResult<Order>? response = this.tradingApi.PostData<RequestCreateOrder, LemonResult<Order>>(request, "orders");
-            if (response == null) return new LemonResult<Order>("response is null");
-
-            return response;
+            return this.tradingApi.PostAsync<LemonResult, RequestActivateOrder>(request, route);
         }
 
         public Task<LemonResults<Order>?> GetAsync(OrderSearchFilter? request = null)
@@ -87,7 +70,7 @@ namespace LemonMarkets.Repos.V1
 
         public Task<LemonResult<Order>?> CreateAsync(RequestCreateOrder request)
         {
-            return this.tradingApi.PostAsync<RequestCreateOrder, LemonResult<Order>>(request, "orders");
+            return this.tradingApi.PostAsync<LemonResult<Order>, RequestCreateOrder>(request, "orders");
         }
 
         public Task<LemonResult?> DeleteAsync(string id)

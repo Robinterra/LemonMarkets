@@ -8,11 +8,7 @@ namespace LemonMarkets.Interfaces
     public interface IOrdersRepo
     {
 
-        LemonResult Activate(RequestActivateOrder request);
-
         Task<LemonResult?> ActivateAsync(RequestActivateOrder request);
-
-        LemonResult<Order> Create(RequestCreateOrder request);
 
         Task<LemonResult<Order>?> CreateAsync(RequestCreateOrder request);
 

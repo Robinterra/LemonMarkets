@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using lemon.LemonMarkets.Interfaces;
 using LemonMarkets.Interfaces;
 using LemonMarkets.Models;
 using LemonMarkets.Models.Enums;
@@ -16,13 +17,13 @@ namespace LemonMarkets.Repos.V1
 
         #region vars
 
-        private readonly WsAPICore tradingApi;
+        private readonly IApiClient tradingApi;
 
         #endregion vars
 
         #region ctor
 
-        public SpaceRepo(WsAPICore tradingApi)
+        public SpaceRepo(IApiClient tradingApi)
         {
             this.tradingApi = tradingApi;
         }
@@ -33,12 +34,12 @@ namespace LemonMarkets.Repos.V1
 
         public Task<LemonResult<Space>?> CreateAsync ( RequestSpace request )
         {
-            return this.tradingApi.PostAsync<RequestSpace, LemonResult<Space>> (request, "spaces");
+            return this.tradingApi.PostAsync<LemonResult<Space>, RequestSpace> (request, "spaces");
         }
 
         public Task<LemonResult<Space>?> UpdateAsync ( string id, RequestSpace request )
         {
-            return this.tradingApi.PutAsync<RequestSpace, LemonResult<Space>> (request, $"spaces/{id}");
+            return this.tradingApi.PutAsync<LemonResult<Space>, RequestSpace> (request, $"spaces/{id}");
         }
 
         public Task<LemonResults<Space>?> GetAsync ( SpaceSearchFilter? request = null )

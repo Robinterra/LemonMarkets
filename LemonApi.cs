@@ -40,12 +40,12 @@ namespace LemonMarkets
             get;
         }
 
-        internal WsAPICore TradingApi
+        internal IApiClient TradingApi
         {
             get;
         }
 
-        internal WsAPICore MarketDataApi
+        internal IApiClient MarketDataApi
         {
             get;
         }
@@ -104,13 +104,15 @@ namespace LemonMarkets
             this.ConnectionInfo = connectionInfo;
             this.ApiKey = apiKey;
 
-            this.TradingApi = new WsAPICore(connectionInfo.TradingAdress, "v1");
-            this.TradingApi.CheckCertEasy += Api_CheckCertEasy;
-            this.TradingApi.SetNewAuth ( apiKey );
+            WsAPICore tradingApi = new WsAPICore(connectionInfo.TradingAdress, "v1");
+            tradingApi.CheckCertEasy += Api_CheckCertEasy;
+            tradingApi.SetNewAuth ( apiKey );
+            this.TradingApi = tradingApi;
 
-            this.MarketDataApi = new WsAPICore(connectionInfo.MarketDataAdress, "v1");
-            this.MarketDataApi.CheckCertEasy += Api_CheckCertEasy;
-            this.MarketDataApi.SetNewAuth ( apiKey );
+            WsAPICore marketDataApi = new WsAPICore(connectionInfo.MarketDataAdress, "v1");
+            marketDataApi.CheckCertEasy += Api_CheckCertEasy;
+            marketDataApi.SetNewAuth ( apiKey );
+            this.MarketDataApi = marketDataApi;
 
             this.Account = new AccountRepo(this.TradingApi);
             this.Orders = new OrdersRepo(this.TradingApi);

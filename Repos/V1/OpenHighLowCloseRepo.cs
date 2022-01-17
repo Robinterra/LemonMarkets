@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using lemon.LemonMarkets.Interfaces;
 using LemonMarkets.Interfaces;
 using LemonMarkets.Models;
 using LemonMarkets.Models.Enums;
@@ -15,13 +16,13 @@ namespace LemonMarkets.Repos.V1
 
         #region vars
 
-        private readonly WsAPICore marketApi;
+        private readonly IApiClient marketApi;
 
         #endregion vars
 
         #region ctor
 
-        public OpenHighLowCloseRepo(WsAPICore marketApi)
+        public OpenHighLowCloseRepo(IApiClient marketApi)
         {
             this.marketApi = marketApi;
         }

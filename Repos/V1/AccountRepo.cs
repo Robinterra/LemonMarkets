@@ -15,13 +15,13 @@ namespace LemonMarkets.Repos.V1
 
         #region vars
 
-        private readonly WsAPICore marketApi;
+        private readonly IApiClient marketApi;
 
         #endregion vars
 
         #region ctor
 
-        public AccountRepo(WsAPICore marketApi)
+        public AccountRepo(IApiClient marketApi)
         {
             this.marketApi = marketApi;
         }
