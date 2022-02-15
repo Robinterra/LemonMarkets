@@ -32,6 +32,12 @@ namespace LemonMarkets.Models.Responses
             set;
         }
 
+        public string? Error_message
+        {
+            get;
+            set;
+        }
+
         /// <summary>
         /// Environment the request was placed in: "paper" or "money"
         /// </summary>
