@@ -3,10 +3,13 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
+    <Version>1.0.0</Version>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Description>Community C# Library #2 for Lemon Markets</Description>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Skender.Stock.Indicators" Version="1.14.0" />
+    <PackageReference Include="ApiService" Version="1.0.7" />
   </ItemGroup>
 
 </Project>
