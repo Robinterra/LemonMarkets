@@ -11,6 +11,7 @@ namespace LemonMarkets.Helper
 
         public JsonTimeOnlyConverter() : this(null)
         {
+
         }
 
         public JsonTimeOnlyConverter(string? serializationFormat)

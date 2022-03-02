@@ -1,6 +1,8 @@
 # LemonMarkets
 C# Library to accecss the lemon markets REST API
 
+# Nuget Package
+ `https://www.nuget.org/packages/LemonMarkets/`
 
 ## Example
 ```csharp
