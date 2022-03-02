@@ -7,7 +7,7 @@ using LemonMarkets.Models.Responses;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using WsApiCore;
+using ApiService;
 
 namespace LemonMarkets.Repos.V1
 {

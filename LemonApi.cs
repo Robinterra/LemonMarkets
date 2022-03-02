@@ -6,6 +6,7 @@ using WsApiCore;
 using System.Security.Cryptography.X509Certificates;
 using lemon.LemonMarkets.Interfaces;
 using LemonMarkets.Repos.V1;
+using ApiService;
 
 namespace LemonMarkets
 {
@@ -104,12 +105,12 @@ namespace LemonMarkets
             this.ConnectionInfo = connectionInfo;
             this.ApiKey = apiKey;
 
-            WsAPICore tradingApi = new WsAPICore(connectionInfo.TradingAdress, "v1");
+            ApiClient tradingApi = new ApiClient(connectionInfo.TradingAdress, "v1");
             tradingApi.CheckCertEasy += Api_CheckCertEasy;
             tradingApi.SetNewAuth ( apiKey );
             this.TradingApi = tradingApi;
 
-            WsAPICore marketDataApi = new WsAPICore(connectionInfo.MarketDataAdress, "v1");
+            ApiClient marketDataApi = new ApiClient(connectionInfo.MarketDataAdress, "v1");
             marketDataApi.CheckCertEasy += Api_CheckCertEasy;
             marketDataApi.SetNewAuth ( apiKey );
             this.MarketDataApi = marketDataApi;

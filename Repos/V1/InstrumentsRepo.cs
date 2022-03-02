@@ -5,7 +5,7 @@ using lemon.LemonMarkets.Interfaces;
 using LemonMarkets.Models;
 using LemonMarkets.Models.Enums;
 using LemonMarkets.Models.Responses;
-using WsApiCore;
+using ApiService;
 
 namespace LemonMarkets.Repos.V1
 {

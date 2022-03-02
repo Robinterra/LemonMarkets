@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using ApiService;
 using lemon.LemonMarkets.Interfaces;
 using LemonMarkets.Models;
 using LemonMarkets.Models.Enums;
 using LemonMarkets.Models.Responses;
-using WsApiCore;
 
 namespace LemonMarkets.Repos.V1
 {

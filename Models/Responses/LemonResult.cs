@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ApiService;
 using lemon.LemonMarkets.Interfaces;
 
 namespace LemonMarkets.Models.Responses
@@ -105,6 +106,11 @@ namespace LemonMarkets.Models.Responses
         {
             if (string.IsNullOrEmpty(this.Status)) this.Status = status;
 
+            return true;
+        }
+
+        public bool SetException(Exception exception)
+        {
             return true;
         }
 
