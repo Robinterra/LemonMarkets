@@ -53,9 +53,8 @@ namespace LemonMarkets.Models.Requests.Trading
 
         #region ctor
 
-        public RequestGetTransactions ( /*string? spaceId = null,*/ DateTime? to = null, DateTime? from = null, string? isin = null, TransactionType type = TransactionType.None )
+        public RequestGetTransactions ( DateTime? to = null, DateTime? from = null, string? isin = null, TransactionType type = TransactionType.None )
         {
-            //this.Space_id = spaceId;
             this.To = to;
             this.From = from;
             this.Type = type;

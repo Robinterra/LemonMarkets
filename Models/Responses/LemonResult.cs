@@ -33,6 +33,16 @@ namespace LemonMarkets.Models.Responses
             set;
         }
 
+        /// <summary>
+        /// Die Error codes können in der Doku nachgeschaut werden:
+        /// https://docs.lemon.markets/error-handling
+        /// </summary>
+        public string? Error_code
+        {
+            get;
+            set;
+        }
+
         public string? Error_message
         {
             get;
