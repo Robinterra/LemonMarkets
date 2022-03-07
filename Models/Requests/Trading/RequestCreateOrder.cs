@@ -11,15 +11,6 @@ namespace LemonMarkets.Models.Requests.Trading
         #region get/set
 
         /// <summary>
-        /// ID of space you want to place the order with
-        /// </summary>
-        [Required]
-        public string Space_id
-        {
-            get;
-        }
-
-        /// <summary>
         /// ISIN of an instrument
         /// </summary>
         [Required]
@@ -96,14 +87,13 @@ namespace LemonMarkets.Models.Requests.Trading
 
         #region ctor
 
-        public RequestCreateOrder(string isin, DateTime expires, OrderSide side, int quantity, string venue, string spaceId, decimal? stop = null, decimal? limit = null, string? notes = null)
+        public RequestCreateOrder(string isin, DateTime expires, OrderSide side, int quantity, string venue, decimal? stop = null, decimal? limit = null, string? notes = null)
         {
             this.Isin = isin;
             this.Expires_at = expires;
             this.Side = side;
             this.Quantity = quantity;
             this.Venue = venue;
-            this.Space_id = spaceId;
             this.Stop_price = stop;
             this.Limit_price = limit;
             this.Notes = notes;

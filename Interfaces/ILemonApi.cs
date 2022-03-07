@@ -31,11 +31,6 @@ namespace LemonMarkets.Interfaces
             get;
         }
 
-        ISpacesRepo Spaces
-        {
-            get;
-        }
-
         IPortfolioRepo Portfolio
         {
             get;

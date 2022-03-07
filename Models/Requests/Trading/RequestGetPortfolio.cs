@@ -16,23 +16,16 @@ namespace LemonMarkets.Models.Requests.Trading
             get;
         }
 
-        public string? Space_id
-        {
-            get;
-        }
-
         #endregion get/set
 
         #region ctor
 
-        public RequestGetPortfolio ( string? isin = null, string? spaceId = null, List<string>? isins = null)
+        public RequestGetPortfolio ( string? isin = null, List<string>? isins = null)
         {
             if (isins != null) this.Isins = isins;
             else this.Isins = new List<string>();
 
             if (isin != null) this.Isins.Add(isin);
-
-            this.Space_id = spaceId;
         }
 
         #endregion ctor

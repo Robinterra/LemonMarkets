@@ -56,11 +56,6 @@ namespace LemonMarkets
             get;
         }
 
-        public ISpacesRepo Spaces
-        {
-            get;
-        }
-
         public IQuotesRepo Quotes
         {
             get;
@@ -117,7 +112,6 @@ namespace LemonMarkets
 
             this.Account = new AccountRepo(this.TradingApi);
             this.Orders = new OrdersRepo(this.TradingApi);
-            this.Spaces = new SpaceRepo ( this.TradingApi );
             this.Quotes = new QuotesRepo ( this.MarketDataApi );
             this.Portfolio = new PortfolioRepo (this.TradingApi);
             this.Transactions = new TransactionsRepo ( this.TradingApi );
