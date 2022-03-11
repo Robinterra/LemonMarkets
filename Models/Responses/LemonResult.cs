@@ -77,11 +77,18 @@ namespace LemonMarkets.Models.Responses
         {
             get
             {
+                if (this.Exception is not null) return false;
+
                 if (this.success is not null && !(bool)this.success) return (bool)this.success;
 
                 return this.Status == "ok";
             }
-            set{}
+        }
+
+        public Exception? Exception
+        {
+            get;
+            private set;
         }
 
         #endregion get/set

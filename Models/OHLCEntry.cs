@@ -77,6 +77,26 @@ namespace LemonMarkets.Models
             set;
         }
 
+        /// <summary>
+        /// Price by Volume (Sum of (quantity * last price)) of instrument in specific time period
+        /// </summary>
+        [JsonPropertyName("pbv")]
+        public decimal PriceByVolume
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Aggegrated volume (Number of trades) of instrument in specific time periods
+        /// </summary>
+        [JsonPropertyName("v")]
+        public int Volume
+        {
+            get;
+            set;
+        }
+
         #endregion get/set
 
     }

@@ -7,6 +7,7 @@ using System.Security.Cryptography.X509Certificates;
 using lemon.LemonMarkets.Interfaces;
 using LemonMarkets.Repos.V1;
 using ApiService;
+using System;
 
 namespace LemonMarkets
 {
@@ -66,7 +67,13 @@ namespace LemonMarkets
             get;
         }
 
+        [Obsolete("Please Use Bankstaments")]
         public ITransactionsRepo Transactions
+        {
+            get;
+        }
+
+        public IBankstamentsRepo Bankstatments
         {
             get;
         }
@@ -112,10 +119,14 @@ namespace LemonMarkets
 
             this.Account = new AccountRepo(this.TradingApi);
             this.Orders = new OrdersRepo(this.TradingApi);
-            this.Quotes = new QuotesRepo ( this.MarketDataApi );
             this.Portfolio = new PortfolioRepo (this.TradingApi);
-            this.Transactions = new TransactionsRepo ( this.TradingApi );
+
+            BankstatementsRepo bankstatements = new BankstatementsRepo ( this.TradingApi );
+            this.Transactions = bankstatements;
+            this.Bankstatments = bankstatements;
+
             this.Venues = new VenuesRepo (this.MarketDataApi);
+            this.Quotes = new QuotesRepo ( this.MarketDataApi );
             this.Instruments = new InstrumentsRepo ( this.MarketDataApi );
             this.OHLC = new OpenHighLowCloseRepo(this.MarketDataApi);
         }
