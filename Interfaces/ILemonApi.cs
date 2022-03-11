@@ -1,4 +1,5 @@
-﻿using lemon.LemonMarkets.Interfaces;
+﻿using System;
+using lemon.LemonMarkets.Interfaces;
 using LemonMarkets.Models;
 
 namespace LemonMarkets.Interfaces
@@ -36,6 +37,7 @@ namespace LemonMarkets.Interfaces
             get;
         }
 
+        [Obsolete("Please Use Bankstaments")]
         ITransactionsRepo Transactions
         {
             get;
@@ -52,6 +54,16 @@ namespace LemonMarkets.Interfaces
         }
 
         IOpenHighLowCloseRepo OHLC
+        {
+            get;
+        }
+
+        IBankstatementsRepo Bankstatements
+        {
+            get;
+        }
+
+        ITradesRepo Trades
         {
             get;
         }

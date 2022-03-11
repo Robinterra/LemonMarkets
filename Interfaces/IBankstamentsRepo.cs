@@ -6,7 +6,7 @@ using LemonMarkets.Models.Responses;
 namespace lemon.LemonMarkets.Interfaces
 {
 
-    public interface IBankstamentsRepo
+    public interface IBankstatementsRepo
     {
 
         Task<LemonResults<BankStatement>?> GetAsync ( BankStatementsFilter? request = null );

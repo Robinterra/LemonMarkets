@@ -11,7 +11,7 @@ using ApiService;
 namespace LemonMarkets.Repos.V1
 {
 
-    public class BankstatementsRepo : ITransactionsRepo, IBankstamentsRepo
+    public class BankstatementsRepo : ITransactionsRepo, IBankstatementsRepo
     {
 
         #region vars
