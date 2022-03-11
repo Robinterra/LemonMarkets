@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
-    <Version>1.0.3</Version>
+    <Version>1.0.4</Version>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Description>Community C# Library #2 for Lemon Markets</Description>
   </PropertyGroup>
