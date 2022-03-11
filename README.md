@@ -15,7 +15,7 @@ using LemonMarkets.Models.Responses;
 string apiKey = "e...Q";
 ILemonApi lemonApi = LemonApi.Build (apiKey, LemonApi.MoneyTradingMode.Paper);
 
-LemonResults<Space>? result = await lemonApi.Spaces.GetAsync ();
+LemonResults<Order>? result = await lemonApi.Orders.GetAsync();
 if ( result == null ) return 1;
 
 Console.WriteLine(result.Status);
