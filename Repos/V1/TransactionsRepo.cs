@@ -11,7 +11,7 @@ using ApiService;
 namespace LemonMarkets.Repos.V1
 {
 
-    public class TransactionsRepo : ITransactionsRepo
+    public class BankstatementsRepo : ITransactionsRepo, IBankstatementsRepo
     {
 
         #region vars
@@ -22,7 +22,7 @@ namespace LemonMarkets.Repos.V1
 
         #region ctor
 
-        public TransactionsRepo ( IApiClient tradingApi )
+        public BankstatementsRepo ( IApiClient tradingApi )
         {
             this.tradingApi = tradingApi;
         }
@@ -49,6 +49,27 @@ namespace LemonMarkets.Repos.V1
             buildParams.AppendJoin("&", param);
 
             return this.tradingApi.GetAsync<LemonResults<Transaction>> ("account/bankstatements", buildParams);
+        }
+
+        public Task<LemonResults<BankStatement>?> GetAsync(BankStatementsFilter? request = null)
+        {
+            if (request == null) return this.tradingApi.GetAsync<LemonResults<BankStatement>> ("account/bankstatements");
+
+            List<string> param = new List<string>();
+
+            if (request.Isin != null) param.Add($"isin={request.Isin}");
+            if (request.To != null) param.Add($"to={request.To}");
+            if (request.From != null) param.Add($"from={request.From}");
+            if (request.Type != BankstatementType.None) param.Add($"type={request.Type.ToString()}");
+            if (request.Sorting != Sorting.None) param.Add($"sorting={request.Sorting}");
+
+            if (param.Count == 0) return this.tradingApi.GetAsync<LemonResults<BankStatement>> ("account/bankstatements");
+
+            StringBuilder buildParams = new ();
+            buildParams.Append("?");
+            buildParams.AppendJoin("&", param);
+
+            return this.tradingApi.GetAsync<LemonResults<BankStatement>> ("account/bankstatements", buildParams);
         }
 
         #endregion methods
