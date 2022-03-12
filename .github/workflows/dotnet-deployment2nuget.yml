@@ -25,6 +25,6 @@ jobs:
     - name: Pack
       run: dotnet pack -c Release -p:PackageVersion=1.1.${{ github.run_number }} ./LemonMarkets.Sdk/LemonMarkets.csproj
     - name: Deploy
-      run: dotnet nuget push ./LemonMarkets.Sdk/bin/Release/*.nupkg -k ${NugetApiKey} --skip-duplicate --no-symbols
+      run: dotnet nuget push ./LemonMarkets.Sdk/bin/Release/*.nupkg -k ${NugetApiKey}
       env:
         NugetApiKey: ${{ secrets.NugetApiKey }}
