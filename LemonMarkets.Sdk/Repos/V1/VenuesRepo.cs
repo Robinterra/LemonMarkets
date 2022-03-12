@@ -1,16 +1,16 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using lemon.LemonMarkets.Interfaces;
+using LemonMarkets.Interfaces;
 using LemonMarkets.Models;
-using LemonMarkets.Models.Enums;
 using LemonMarkets.Models.Responses;
 using ApiService;
 
 namespace LemonMarkets.Repos.V1
 {
 
-    public class TradesRepo : ITradesRepo
+    public class VenuesRepo : IVenuesRepo
     {
 
         #region vars
@@ -21,7 +21,7 @@ namespace LemonMarkets.Repos.V1
 
         #region ctor
 
-        public TradesRepo(IApiClient marketApi)
+        public VenuesRepo(IApiClient marketApi)
         {
             this.marketApi = marketApi;
         }
@@ -30,21 +30,21 @@ namespace LemonMarkets.Repos.V1
 
         #region methods
 
-        public Task<LemonResults<Trade>?> GetAsync ( TradesSearchFilter request )
+        public Task<LemonResults<Venue>> GetAsync ( VenueSearchFilter? request = null )
         {
+            if (request == null) return this.marketApi.GetAsync<LemonResults<Venue>> ("venues")!;
+
             List<string> param = new List<string>();
 
-            param.Add($"isin={string.Join(',', request.Isins)}");
-            if (request.From != null) param.Add($"from={request.From}");
-            if (request.To != null) param.Add($"to={request.To}");
             if (request.Mic != null) param.Add($"mic={request.Mic}");
-            if (request.Sorting != Sorting.None) param.Add($"sorting={request.Sorting}");
+
+            if (param.Count == 0) return this.marketApi.GetAsync<LemonResults<Venue>> ("venues")!;
 
             StringBuilder buildParams = new ();
             buildParams.Append("?");
             buildParams.AppendJoin("&", param);
 
-            return this.marketApi.GetAsync<LemonResults<Trade>> ("trades", buildParams);
+            return this.marketApi.GetAsync<LemonResults<Venue>> ("venues", buildParams)!;
         }
 
         #endregion methods

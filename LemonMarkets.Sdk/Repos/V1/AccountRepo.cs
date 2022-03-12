@@ -30,9 +30,9 @@ namespace LemonMarkets.Repos.V1
 
         #region methods
 
-        public Task<LemonResult<Account>?> GetAsync (  )
+        public Task<LemonResult<Account>> GetAsync (  )
         {
-            return this.marketApi.GetAsync<LemonResult<Account>> ("account");
+            return this.marketApi.GetAsync<LemonResult<Account>> ("account")!;
         }
 
         #endregion methods

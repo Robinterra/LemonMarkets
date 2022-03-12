@@ -2,6 +2,7 @@
 using System.Text;
 using System.Threading.Tasks;
 using lemon.LemonMarkets.Interfaces;
+using LemonMarkets.Interfaces;
 using LemonMarkets.Models;
 using LemonMarkets.Models.Enums;
 using LemonMarkets.Models.Responses;
@@ -10,7 +11,7 @@ using ApiService;
 namespace LemonMarkets.Repos.V1
 {
 
-    public class QuotesRepo : IQuotesRepo
+    public class OpenHighLowCloseRepo : IOpenHighLowCloseRepo
     {
 
         #region vars
@@ -21,7 +22,7 @@ namespace LemonMarkets.Repos.V1
 
         #region ctor
 
-        public QuotesRepo(IApiClient marketApi)
+        public OpenHighLowCloseRepo(IApiClient marketApi)
         {
             this.marketApi = marketApi;
         }
@@ -30,9 +31,13 @@ namespace LemonMarkets.Repos.V1
 
         #region methods
 
-        public Task<LemonResults<Quote>?> GetAsync ( QuoteSearchFilter request )
+        public Task<LemonResults<OHLCEntry>> GetAsync ( OHLCSearchFilter request )
         {
             List<string> param = new List<string>();
+
+            string timeMode = "m1";
+            if ( request.TimeMode == OHLCTimeMode.Daily ) timeMode = "d1";
+            if ( request.TimeMode == OHLCTimeMode.Hourly ) timeMode = "h1";
 
             param.Add($"isin={string.Join(',', request.Isins)}");
             if (request.From != null) param.Add($"from={request.From}");
@@ -44,7 +49,7 @@ namespace LemonMarkets.Repos.V1
             buildParams.Append("?");
             buildParams.AppendJoin("&", param);
 
-            return this.marketApi.GetAsync<LemonResults<Quote>> ("quotes", buildParams);
+            return this.marketApi.GetAsync<LemonResults<OHLCEntry>> ("ohlc", timeMode, buildParams)!;
         }
 
         #endregion methods
