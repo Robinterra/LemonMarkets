@@ -27,7 +27,7 @@ namespace LemonMarkets.UnitTests
         public QuotesRepoTest ()
         {
             this.quotes = new List<Quote> ();
-            this.quotes.Add(new Quote () { Ask = 12, Bid = 11, AskVolume = 100, BidVolume = 200, Isin = "DE123456", Mic = "XMN", Time = DateTime.Now});
+            this.quotes.Add(new Quote () { Ask = 14, Bid = 11, AskVolume = 100, BidVolume = 200, Isin = "DE123456", Mic = "XMN", Time = DateTime.Now});
             this.quotes.Add(new Quote () { Ask = 12, Bid = 13, AskVolume = 100, BidVolume = 100, Isin = "DE123457", Mic = "MUNICH", Time = DateTime.Now});
             this.quotes.Add(new Quote () { Ask = 12, Bid = 14, AskVolume = 100, BidVolume = 100, Isin = "DE123456", Mic = "MUNICH", Time = DateTime.Now});
             this.quotes.Add(new Quote () { Ask = 12, Bid = 15, AskVolume = 100, BidVolume = 100, Isin = "DE123457", Mic = "XMN", Time = DateTime.Now});
@@ -48,7 +48,8 @@ namespace LemonMarkets.UnitTests
             IApiClient apiClient = new FakeApiClient("https://data.lemon.markets", "v1", get: ApiClient_Get_ShouldReturn2Quotes_WhenAskForQuotesWith2Isin );
             IQuotesRepo quotesRepo = new QuotesRepo(apiClient);
 
-            QuoteSearchFilter filter = new(new List<string> {"DE123456", "DE123458"}, mic: "XMN");
+            List<string> isins = new List<string> {"DE123456", "DE123458"};
+            QuoteSearchFilter filter = new( isins, mic: "XMN");
 
             // Act
             LemonResults<Quote> results = await quotesRepo.GetAsync ( filter );
@@ -63,21 +64,13 @@ namespace LemonMarkets.UnitTests
 
             Quote quote = results.Results.Find ( t => t.Isin == "DE123456" );
             Assert.NotNull(quote);
-            Assert.Equal("DE123456", quote.Isin);
             Assert.Equal("XMN", quote.Mic);
-            Assert.Equal(12, quote.Ask);
-            Assert.Equal(11, quote.Bid);
-            Assert.Equal(100, quote.AskVolume);
-            Assert.Equal(200, quote.BidVolume);
+            Assert.Equal(14, quote.Ask);
 
             quote = results.Results.Find ( t => t.Isin == "DE123458" );
             Assert.NotNull(quote);
-            Assert.Equal("DE123458", quote.Isin);
             Assert.Equal("XMN", quote.Mic);
             Assert.Equal(13, quote.Ask);
-            Assert.Equal(11, quote.Bid);
-            Assert.Equal(100, quote.AskVolume);
-            Assert.Equal(200, quote.BidVolume);
         }
 
         private Task<FakeApiResponse> ApiClient_Get_ShouldReturn2Quotes_WhenAskForQuotesWith2Isin ( FakeApiRequest request )
