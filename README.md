@@ -1,4 +1,5 @@
 # LemonMarkets
+[![.NET](https://github.com/Robinterra/LemonMarkets/actions/workflows/dotnet-unittest.yml/badge.svg)](https://github.com/Robinterra/LemonMarkets/actions/workflows/dotnet-unittest.yml)
 C# Library to accecss the lemon markets REST API
 
 # Nuget Package
