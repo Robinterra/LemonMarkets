@@ -1,0 +1,28 @@
+name: Deploy
+
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.0.100
+    - name: Restore dependencies
+      run: dotnet restore ./LemonMarkets.Sdk/LemonMarkets.csproj
+    - name: Build
+      run:  dotnet pack -c Release -p:PackageVersion=1.0.${{ github.run_number }} ./LemonMarkets.Sdk/LemonMarkets.csproj
+    - name: Deploy
+      run: dotnet nuget push ./LemonMarkets.Sdk/bin/Release/*.nupkg -k ${NugetApiKey} --skip-duplicate --no-symbols 
+      env:
+        NugetApiKey: ${{ secrets.NugetApiKey }}
