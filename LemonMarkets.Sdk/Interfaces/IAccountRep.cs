@@ -8,7 +8,7 @@ namespace lemon.LemonMarkets.Interfaces
     public interface IAccountRepo
     {
 
-        Task<LemonResult<Account>?> GetAsync (  );
+        Task<LemonResult<Account>> GetAsync (  );
 
     }
 

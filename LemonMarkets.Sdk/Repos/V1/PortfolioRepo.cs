@@ -31,21 +31,21 @@ namespace LemonMarkets.Repos.V1
 
         #region methods
 
-        public Task<LemonResults<PortfolioEntry>?> GetAsync ( RequestGetPortfolio? request = null )
+        public Task<LemonResults<PortfolioEntry>> GetAsync ( RequestGetPortfolio? request = null )
         {
-            if ( request == null ) return this.tradingApi.GetAsync<LemonResults<PortfolioEntry>> ("portfolio");
+            if ( request == null ) return this.tradingApi.GetAsync<LemonResults<PortfolioEntry>> ("portfolio")!;
 
             List<string> param = new List<string>();
 
             if (request.Isins.Count != 0) param.Add($"isin={string.Join(',', request.Isins)}");
 
-            if (param.Count == 0) return this.tradingApi.GetAsync<LemonResults<PortfolioEntry>> ("portfolio");
+            if (param.Count == 0) return this.tradingApi.GetAsync<LemonResults<PortfolioEntry>> ("portfolio")!;
 
             StringBuilder buildParams = new ();
             buildParams.Append("?");
             buildParams.AppendJoin("&", param);
 
-            return this.tradingApi.GetAsync<LemonResults<PortfolioEntry>> ("portfolio", buildParams);
+            return this.tradingApi.GetAsync<LemonResults<PortfolioEntry>> ("portfolio", buildParams)!;
         }
 
         #endregion methods

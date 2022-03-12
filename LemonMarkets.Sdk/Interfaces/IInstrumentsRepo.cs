@@ -8,7 +8,7 @@ namespace lemon.LemonMarkets.Interfaces
     public interface IInstrumentsRepo
     {
 
-        Task<LemonResults<Instrument>?> GetAsync ( InstrumentSearchFilter? request = null );
+        Task<LemonResults<Instrument>> GetAsync ( InstrumentSearchFilter? request = null );
 
     }
 

@@ -8,7 +8,7 @@ namespace LemonMarkets.Interfaces
     public interface IVenuesRepo
     {
 
-        Task<LemonResults<Venue>?> GetAsync ( VenueSearchFilter? request = null );
+        Task<LemonResults<Venue>> GetAsync ( VenueSearchFilter? request = null );
 
     }
 

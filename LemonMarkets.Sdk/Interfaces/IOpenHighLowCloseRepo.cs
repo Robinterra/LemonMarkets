@@ -11,7 +11,7 @@ namespace LemonMarkets.Interfaces
     public interface IOpenHighLowCloseRepo
     {
 
-        Task<LemonResults<OHLCEntry>?> GetAsync (OHLCSearchFilter request);
+        Task<LemonResults<OHLCEntry>> GetAsync (OHLCSearchFilter request);
 
     }
 

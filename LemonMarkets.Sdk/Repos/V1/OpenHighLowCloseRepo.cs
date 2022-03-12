@@ -31,7 +31,7 @@ namespace LemonMarkets.Repos.V1
 
         #region methods
 
-        public Task<LemonResults<OHLCEntry>?> GetAsync ( OHLCSearchFilter request )
+        public Task<LemonResults<OHLCEntry>> GetAsync ( OHLCSearchFilter request )
         {
             List<string> param = new List<string>();
 
@@ -49,7 +49,7 @@ namespace LemonMarkets.Repos.V1
             buildParams.Append("?");
             buildParams.AppendJoin("&", param);
 
-            return this.marketApi.GetAsync<LemonResults<OHLCEntry>> ("ohlc", timeMode, buildParams);
+            return this.marketApi.GetAsync<LemonResults<OHLCEntry>> ("ohlc", timeMode, buildParams)!;
         }
 
         #endregion methods

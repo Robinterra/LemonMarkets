@@ -32,17 +32,17 @@ namespace LemonMarkets.Repos.V1
 
         #region methods
 
-        public Task<LemonResult?> ActivateAsync(RequestActivateOrder request)
+        public Task<LemonResult> ActivateAsync(RequestActivateOrder request)
         {
             string route = $"orders/{request.OrderId}/activate";
-            if ( request.Pin == null ) return this.tradingApi.PostAsync<LemonResult> ( route );
+            if ( request.Pin == null ) return this.tradingApi.PostAsync<LemonResult> ( route )!;
 
-            return this.tradingApi.PostAsync<LemonResult, RequestActivateOrder>(request, route);
+            return this.tradingApi.PostAsync<LemonResult, RequestActivateOrder>(request, route)!;
         }
 
-        public Task<LemonResults<Order>?> GetAsync(OrderSearchFilter? request = null)
+        public Task<LemonResults<Order>> GetAsync(OrderSearchFilter? request = null)
         {
-            if (request == null) return this.tradingApi.GetAsync<LemonResults<Order>>("orders");
+            if (request == null) return this.tradingApi.GetAsync<LemonResults<Order>>("orders")!;
 
             List<string> param = new List<string>();
 
@@ -54,28 +54,28 @@ namespace LemonMarkets.Repos.V1
             if (request.Type != OrderType.All) param.Add($"type={request.Type.ToString().ToLower()}");
             if (request.Status != OrderStatus.All) param.Add($"status={request.Status.ToString().ToLower()}");
 
-            if (param.Count == 0) return this.tradingApi.GetAsync<LemonResults<Order>>("orders");
+            if (param.Count == 0) return this.tradingApi.GetAsync<LemonResults<Order>>("orders")!;
 
             StringBuilder buildParams = new StringBuilder();
             buildParams.Append("?");
             buildParams.AppendJoin("&", param);
 
-            return this.tradingApi.GetAsync<LemonResults<Order>>("orders", buildParams);
+            return this.tradingApi.GetAsync<LemonResults<Order>>("orders", buildParams)!;
         }
 
-        public Task<LemonResult<Order>?> GetAsync(string id)
+        public Task<LemonResult<Order>> GetAsync(string id)
         {
-            return this.tradingApi.GetAsync<LemonResult<Order>>("orders", id);
+            return this.tradingApi.GetAsync<LemonResult<Order>>("orders", id)!;
         }
 
-        public Task<LemonResult<Order>?> CreateAsync(RequestCreateOrder request)
+        public Task<LemonResult<Order>> CreateAsync(RequestCreateOrder request)
         {
-            return this.tradingApi.PostAsync<LemonResult<Order>, RequestCreateOrder>(request, "orders");
+            return this.tradingApi.PostAsync<LemonResult<Order>, RequestCreateOrder>(request, "orders")!;
         }
 
-        public Task<LemonResult?> DeleteAsync(string id)
+        public Task<LemonResult> DeleteAsync(string id)
         {
-            return this.tradingApi.DeleteAsync<LemonResult>("orders", id);
+            return this.tradingApi.DeleteAsync<LemonResult>("orders", id)!;
         }
 
         #endregion methods

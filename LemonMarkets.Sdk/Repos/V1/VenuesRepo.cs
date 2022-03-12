@@ -30,21 +30,21 @@ namespace LemonMarkets.Repos.V1
 
         #region methods
 
-        public Task<LemonResults<Venue>?> GetAsync ( VenueSearchFilter? request = null )
+        public Task<LemonResults<Venue>> GetAsync ( VenueSearchFilter? request = null )
         {
-            if (request == null) return this.marketApi.GetAsync<LemonResults<Venue>> ("venues");
+            if (request == null) return this.marketApi.GetAsync<LemonResults<Venue>> ("venues")!;
 
             List<string> param = new List<string>();
 
             if (request.Mic != null) param.Add($"mic={request.Mic}");
 
-            if (param.Count == 0) return this.marketApi.GetAsync<LemonResults<Venue>> ("venues");
+            if (param.Count == 0) return this.marketApi.GetAsync<LemonResults<Venue>> ("venues")!;
 
             StringBuilder buildParams = new ();
             buildParams.Append("?");
             buildParams.AppendJoin("&", param);
 
-            return this.marketApi.GetAsync<LemonResults<Venue>> ("venues", buildParams);
+            return this.marketApi.GetAsync<LemonResults<Venue>> ("venues", buildParams)!;
         }
 
         #endregion methods

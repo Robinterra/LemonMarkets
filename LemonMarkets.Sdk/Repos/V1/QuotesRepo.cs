@@ -30,7 +30,7 @@ namespace LemonMarkets.Repos.V1
 
         #region methods
 
-        public Task<LemonResults<Quote>?> GetAsync ( QuoteSearchFilter request )
+        public Task<LemonResults<Quote>> GetAsync ( QuoteSearchFilter request )
         {
             List<string> param = new List<string>();
 
@@ -44,7 +44,7 @@ namespace LemonMarkets.Repos.V1
             buildParams.Append("?");
             buildParams.AppendJoin("&", param);
 
-            return this.marketApi.GetAsync<LemonResults<Quote>> ("quotes", buildParams);
+            return this.marketApi.GetAsync<LemonResults<Quote>> ("quotes", buildParams)!;
         }
 
         #endregion methods

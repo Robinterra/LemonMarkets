@@ -9,7 +9,7 @@ namespace lemon.LemonMarkets.Interfaces
     public interface IBankstatementsRepo
     {
 
-        Task<LemonResults<BankStatement>?> GetAsync ( BankStatementsFilter? request = null );
+        Task<LemonResults<BankStatement>> GetAsync ( BankStatementsFilter? request = null );
 
     }
 
