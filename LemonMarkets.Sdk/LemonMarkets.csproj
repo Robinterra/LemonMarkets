@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <Version>1.0.5</Version>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <RepositoryUrl>https://github.com/Robinterra/LemonMarkets</RepositoryUrl>
     <Description>Community C# Library #2 for Lemon Markets</Description>
   </PropertyGroup>
 
