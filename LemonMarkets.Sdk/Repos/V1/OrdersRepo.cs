@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using ApiService;
+using System;
 
 namespace LemonMarkets.Repos.V1
 {
@@ -46,8 +47,8 @@ namespace LemonMarkets.Repos.V1
 
             List<string> param = new List<string>();
 
-            if (request.From != null) param.Add($"from={request.From}");
-            if (request.To != null) param.Add($"to={request.To}");
+            if (request.From != null) param.Add($"from={((DateTime)request.From).ToString("yyyy-MM-ddTHH:mm:ss")}");
+            if (request.To != null) param.Add($"to={((DateTime)request.To).ToString("yyyy-MM-ddTHH:mm:ss")}");
             if (request.Isins.Count != 0) param.Add($"isin={string.Join(',', request.Isins)}");
             if (request.SpaceUuid != null) param.Add($"space_id={request.SpaceUuid}");
             if (request.Side != OrderSide.All) param.Add($"side={request.Side.ToString().ToLower()}");
