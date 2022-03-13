@@ -20,11 +20,11 @@ namespace LemonMarkets
 
         #region vars
 
-        private static string apiDataBaseUrl = "https://data.lemon.markets";
-        
-        private static string apiPaperTradingBaseUrl = "https://paper-trading.lemon.markets";
+        public static string apiDataBaseUrl = "https://data.lemon.markets";
 
-        private static string apiRealTradingBaseUrl = "https://trading.lemon.markets";
+        public static string apiPaperTradingBaseUrl = "https://paper-trading.lemon.markets";
+
+        public static string apiRealTradingBaseUrl = "https://trading.lemon.markets";
 
         #endregion vars
 

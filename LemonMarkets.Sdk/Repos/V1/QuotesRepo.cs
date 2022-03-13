@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using lemon.LemonMarkets.Interfaces;
+using LemonMarkets.Interfaces;
 using LemonMarkets.Models;
 using LemonMarkets.Models.Enums;
 using LemonMarkets.Models.Responses;
 using ApiService;
+using System;
 
 namespace LemonMarkets.Repos.V1
 {
@@ -35,8 +36,8 @@ namespace LemonMarkets.Repos.V1
             List<string> param = new List<string>();
 
             param.Add($"isin={string.Join(',', request.Isins)}");
-            if (request.From != null) param.Add($"from={request.From}");
-            if (request.To != null) param.Add($"to={request.To}");
+            if (request.From != null) param.Add($"from={((DateTime)request.From).ToString("yyyy-MM-ddTHH:mm:ss")}");
+            if (request.To != null) param.Add($"to={((DateTime)request.To).ToString("yyyy-MM-ddTHH:mm:ss")}");
             if (request.Mic != null) param.Add($"mic={request.Mic}");
             if (request.Sorting != Sorting.None) param.Add($"sorting={request.Sorting}");
 
