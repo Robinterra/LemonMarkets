@@ -128,6 +128,12 @@ namespace LemonMarkets.Models
             get; set;
         }
 
+        public string? Notes
+        {
+            get;
+            set;
+        }
+
     }
 
     public class InstrumentShort

@@ -5,11 +5,11 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ApiService;
-using lemon.LemonMarkets.Interfaces;
 using LemonMarkets.Models;
 using LemonMarkets.Models.Responses;
 using Xunit;
 using LemonMarkets.Repos.V1;
+using LemonMarkets.Interfaces;
 
 namespace LemonMarkets.UnitTests
 {
@@ -45,7 +45,7 @@ namespace LemonMarkets.UnitTests
         public async Task Get_ShouldReturn2Quotes_WhenAskForQuotesWith2IsinAndOneMic()
         {
             // Arrange
-            IApiClient apiClient = new FakeApiClient("https://data.lemon.markets", "v1", get: ApiClient_Get_ShouldReturn2Quotes_WhenAskForQuotesWith2IsinAndOneMic );
+            IApiClient apiClient = new FakeApiClient(LemonApi.apiDataBaseUrl, "v1", get: ApiClient_Get_ShouldReturn2Quotes_WhenAskForQuotesWith2IsinAndOneMic );
             IQuotesRepo quotesRepo = new QuotesRepo(apiClient);
 
             List<string> isins = new List<string> {"DE123456", "DE123458"};
@@ -106,7 +106,7 @@ namespace LemonMarkets.UnitTests
         public async Task Get_ShouldReturn3Quotes_WhenAskForQuotesWith2IsinAndATimeRange()
         {
             // Arrange
-            IApiClient apiClient = new FakeApiClient("https://data.lemon.markets", "v1", get: ApiClient_Get_ShouldReturn3Quotes_WhenAskForQuotesWith2IsinAndATimeRange );
+            IApiClient apiClient = new FakeApiClient(LemonApi.apiDataBaseUrl, "v1", get: ApiClient_Get_ShouldReturn3Quotes_WhenAskForQuotesWith2IsinAndATimeRange );
             IQuotesRepo quotesRepo = new QuotesRepo(apiClient);
 
             List<string> isins = new List<string> {"DE123456", "DE123457"};

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using lemon.LemonMarkets.Interfaces;
+using LemonMarkets.Interfaces;
 using LemonMarkets.Models;
 using LemonMarkets.Models.Enums;
 using LemonMarkets.Models.Responses;
