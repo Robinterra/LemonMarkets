@@ -9,11 +9,6 @@ namespace LemonMarkets.Models
 
         #region get/set
 
-        public string? SpaceUuid
-        {
-            get;
-        }
-
         public OrderSide Side
         {
             get;
@@ -53,7 +48,7 @@ namespace LemonMarkets.Models
 
         #region ctor
 
-        public OrderSearchFilter(List<string>? isins = null, string? isin = null, OrderStatus orderStatus = OrderStatus.All, OrderType orderType = OrderType.All, OrderSide orderSide = OrderSide.All, string? spaceId = null, DateTime? to = null, DateTime? from = null)
+        public OrderSearchFilter(List<string>? isins = null, string? isin = null, OrderStatus orderStatus = OrderStatus.All, OrderType orderType = OrderType.All, OrderSide orderSide = OrderSide.All, DateTime? to = null, DateTime? from = null)
         {
             if (isins != null) this.Isins = isins;
             else this.Isins = new List<string>();
@@ -64,7 +59,6 @@ namespace LemonMarkets.Models
             this.Side = orderSide;
             this.From = from;
             this.To = to;
-            this.SpaceUuid = spaceId;
         }
 
         #endregion ctor
