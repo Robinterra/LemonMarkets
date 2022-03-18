@@ -52,7 +52,13 @@ namespace LemonMarkets
             get;
         }
 
+        [Obsolete("Please Use Positions")]
         public IPortfolioRepo Portfolio
+        {
+            get;
+        }
+
+        public IPositionsRepo Positions
         {
             get;
         }
@@ -125,7 +131,10 @@ namespace LemonMarkets
 
             this.Account = new AccountRepo(this.TradingApi);
             this.Orders = new OrdersRepo(this.TradingApi);
-            this.Portfolio = new PortfolioRepo (this.TradingApi);
+
+            PositionsRepo positions = new PositionsRepo(this.TradingApi);
+            this.Portfolio = positions;
+            this.Positions = positions;
 
             BankstatementsRepo bankstatements = new BankstatementsRepo ( this.TradingApi );
             this.Transactions = bankstatements;

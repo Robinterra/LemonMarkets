@@ -50,7 +50,6 @@ namespace LemonMarkets.Repos.V1
             if (request.From != null) param.Add($"from={((DateTime)request.From).ToString("yyyy-MM-ddTHH:mm:ss")}");
             if (request.To != null) param.Add($"to={((DateTime)request.To).ToString("yyyy-MM-ddTHH:mm:ss")}");
             if (request.Isins.Count != 0) param.Add($"isin={string.Join(',', request.Isins)}");
-            if (request.SpaceUuid != null) param.Add($"space_id={request.SpaceUuid}");
             if (request.Side != OrderSide.All) param.Add($"side={request.Side.ToString().ToLower()}");
             if (request.Type != OrderType.All) param.Add($"type={request.Type.ToString().ToLower()}");
             if (request.Status != OrderStatus.All) param.Add($"status={request.Status.ToString().ToLower()}");
