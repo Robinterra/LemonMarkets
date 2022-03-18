@@ -32,7 +32,13 @@ namespace LemonMarkets.Interfaces
             get;
         }
 
+        [Obsolete("Please Use Positions")]
         IPortfolioRepo Portfolio
+        {
+            get;
+        }
+
+        IPositionsRepo Positions
         {
             get;
         }
