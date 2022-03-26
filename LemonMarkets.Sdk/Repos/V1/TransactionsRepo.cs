@@ -7,6 +7,7 @@ using LemonMarkets.Models.Enums;
 using LemonMarkets.Models.Requests.Trading;
 using LemonMarkets.Models.Responses;
 using ApiService;
+using System;
 
 namespace LemonMarkets.Repos.V1
 {
@@ -58,8 +59,8 @@ namespace LemonMarkets.Repos.V1
             List<string> param = new List<string>();
 
             if (request.Isin != null) param.Add($"isin={request.Isin}");
-            if (request.To != null) param.Add($"to={request.To}");
-            if (request.From != null) param.Add($"from={request.From}");
+            if (request.To != null) param.Add($"to={((DateTime)request.To).ToString("yyyy-MM-ddTHH:mm:ss")}");
+            if (request.From != null) param.Add($"from={((DateTime)request.From).ToString("yyyy-MM-ddTHH:mm:ss")}");
             if (request.Type != BankstatementType.None) param.Add($"type={request.Type.ToString()}");
             if (request.Sorting != Sorting.None) param.Add($"sorting={request.Sorting}");
 

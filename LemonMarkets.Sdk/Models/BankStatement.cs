@@ -29,24 +29,6 @@ namespace LemonMarkets.Models
         }
 
         /// <summary>
-        /// ID of related space
-        /// </summary>
-        public string? Space_id
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// ID of related order
-        /// </summary>
-        public string? Order_id
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
         /// Type of transaction, currently possible: pay_in, pay_out, order_buy, order_sell, dividend, tax
         /// </summary>
         [JsonConverter(typeof(JsonStringEnumConverter))]
@@ -87,6 +69,15 @@ namespace LemonMarkets.Models
         /// Date of bank statement (YYYY-MM-DD)
         /// </summary>
         public DateTime Date
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Exact timestamp the bank statement was created
+        /// </summary>
+        public DateTime Created_at
         {
             get;
             set;
