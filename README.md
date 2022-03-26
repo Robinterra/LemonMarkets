@@ -9,6 +9,8 @@ C# Library to accecss the lemon markets REST API
  `https://www.nuget.org/packages/LemonMarkets/`
 
 ## Example
+Weitere Examples sind im sample Ordner zu finden (darunter wie eine Order erstellt und aktiviert wird).
+
 ```csharp
 using System;
 using LemonMarkets;
@@ -24,7 +26,7 @@ if ( result == null ) return 1;
 
 Console.WriteLine(result.Status);
 
-LemonResults<Quote>? results = await lemonApi.Quotes.GetAsync (new ("DE0008404005"));
+LemonResults<Quote>? results = await lemonApi.Quotes.GetLatestAsync (new ("DE0008404005"));
 if ( results == null ) return 2;
 
 Console.WriteLine ( results.Status );
