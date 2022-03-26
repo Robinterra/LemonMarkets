@@ -6,7 +6,7 @@ using LemonMarkets.Models.Enums;
 using LemonMarkets.Models.Requests.Trading;
 using LemonMarkets.Models.Responses;
 
-// Du kannst dein api key auch direkt hier einfügen, dafür einfach zeile 5 auskommentieren und dann zeile 6 verwenden.
+// Du kannst dein api key auch direkt hier einfügen, dafür einfach zeile 10 auskommentieren und dann zeile 11 verwenden.
 string? apiKey = Environment.GetEnvironmentVariable("apikey");
 //string apiKey = "hier dein api key einfügen";
 
@@ -74,9 +74,9 @@ RequestActivateOrder requestActivateOrder = new(order.Id, activateOrderPin);
 LemonResult activateResult = await lemonApi.Orders.ActivateAsync(requestActivateOrder);
 
 // Sollte bei vom HttpClient oder beim Deserialiseren eine exception hochkommen gebe ich die Exception über das Result Objekt zurück
-if (createOrderResult.Exception is not null)
+if (activateResult.Exception is not null)
 {
-    await Console.Error.WriteLineAsync($"Leider ist eine Exception aufgetreten: {createOrderResult.Exception}");
+    await Console.Error.WriteLineAsync($"Leider ist eine Exception aufgetreten: {activateResult.Exception}");
 
     return 4;
 }
@@ -84,7 +84,7 @@ if (createOrderResult.Exception is not null)
 // Sollte IsSuccess nicht true sein, dann konnte keine Order aktiviert werden.
 if (!activateResult.IsSuccess)
 {
-    await Console.Error.WriteLineAsync($"Order konnte nicht aktiviert werden. HttpCode: '{createOrderResult.HttpCode}', Status: '{createOrderResult.Status}', ErrorCode: '{createOrderResult.Error_code}', ErrorMessage: '{createOrderResult.Error_message}'.");
+    await Console.Error.WriteLineAsync($"Order konnte nicht aktiviert werden. HttpCode: '{activateResult.HttpCode}', Status: '{activateResult.Status}', ErrorCode: '{activateResult.Error_code}', ErrorMessage: '{activateResult.Error_message}'.");
 
     return 5;
 }

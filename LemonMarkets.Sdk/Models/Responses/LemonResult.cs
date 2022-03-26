@@ -73,7 +73,7 @@ namespace LemonMarkets.Models.Responses
             set;
         }
 
-        public bool IsSuccess
+        public virtual bool IsSuccess
         {
             get
             {
@@ -105,6 +105,10 @@ namespace LemonMarkets.Models.Responses
             this.Status = status;
         }
 
+        #endregion ctor
+
+        #region methods
+
         public bool SetHttpCode(int httpCode)
         {
             this.HttpCode = httpCode;
@@ -128,10 +132,12 @@ namespace LemonMarkets.Models.Responses
 
         public bool SetException(Exception exception)
         {
+            this.Exception = exception;
+
             return true;
         }
 
-        #endregion ctor
+        #endregion methods
 
     }
 }
