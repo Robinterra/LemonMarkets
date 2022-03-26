@@ -20,10 +20,21 @@ namespace LemonMarkets.Models.Responses
             get; set;
         }
 
+        public override bool IsSuccess
+        {
+            get
+            {
+                if (this.Results is not null) return true;
+
+                return base.IsSuccess;
+            }
+        }
+
         [JsonPropertyName("results")]
         public List<T>? Results
         {
-            get; set;
+            get;
+            set;
         }
 
         #endregion get/set
