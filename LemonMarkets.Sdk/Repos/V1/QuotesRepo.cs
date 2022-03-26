@@ -31,6 +31,7 @@ namespace LemonMarkets.Repos.V1
 
         #region methods
 
+        [Obsolete("Please use GetLatestAsync, diese Methode wird noch bis zum 2022-04-01 funktionieren")]
         public Task<LemonResults<Quote>> GetAsync ( QuoteSearchFilter request )
         {
             List<string> param = new List<string>();
@@ -46,6 +47,21 @@ namespace LemonMarkets.Repos.V1
             buildParams.AppendJoin("&", param);
 
             return this.marketApi.GetAsync<LemonResults<Quote>> ("quotes", buildParams)!;
+        }
+
+        public Task<LemonResults<Quote>> GetLatestAsync ( QuoteLatestSearchFilter request )
+        {
+            List<string> param = new List<string>();
+
+            param.Add($"isin={string.Join(',', request.Isins)}");
+            if (request.Mic != null) param.Add($"mic={request.Mic}");
+            if (request.Sorting != Sorting.None) param.Add($"sorting={request.Sorting}");
+
+            StringBuilder buildParams = new ();
+            buildParams.Append("?");
+            buildParams.AppendJoin("&", param);
+
+            return this.marketApi.GetAsync<LemonResults<Quote>> ("quotes/latest", buildParams)!;
         }
 
         #endregion methods

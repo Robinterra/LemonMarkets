@@ -39,20 +39,20 @@ namespace LemonMarkets.UnitTests
 
         #region methods
 
-        #region Get_ShouldReturn2Quotes_WhenAskForQuotesWith2IsinAndOneMic
+        #region GetLatest_ShouldReturn2Quotes_WhenAskForQuotesWith2IsinAndOneMic
 
         [Fact]
-        public async Task Get_ShouldReturn2Quotes_WhenAskForQuotesWith2IsinAndOneMic()
+        public async Task GetLatest_ShouldReturn2Quotes_WhenAskForQuotesWith2IsinAndOneMic()
         {
             // Arrange
-            IApiClient apiClient = new FakeApiClient(LemonApi.apiDataBaseUrl, "v1", get: ApiClient_Get_ShouldReturn2Quotes_WhenAskForQuotesWith2IsinAndOneMic );
+            IApiClient apiClient = new FakeApiClient(LemonApi.apiDataBaseUrl, "v1", get: ApiClient_GetLatest_ShouldReturn2Quotes_WhenAskForQuotesWith2IsinAndOneMic );
             IQuotesRepo quotesRepo = new QuotesRepo(apiClient);
 
             List<string> isins = new List<string> {"DE123456", "DE123458"};
-            QuoteSearchFilter filter = new( isins, mic: "XMN");
+            QuoteLatestSearchFilter filter = new( isins, mic: "XMN");
 
             // Act
-            LemonResults<Quote> results = await quotesRepo.GetAsync ( filter );
+            LemonResults<Quote> results = await quotesRepo.GetLatestAsync ( filter );
 
             // Assert
             Assert.NotNull ( results );
@@ -71,12 +71,12 @@ namespace LemonMarkets.UnitTests
             Assert.Equal("XMN", quote.Mic);
         }
 
-        private Task<FakeApiResponse> ApiClient_Get_ShouldReturn2Quotes_WhenAskForQuotesWith2IsinAndOneMic ( FakeApiRequest request )
+        private Task<FakeApiResponse> ApiClient_GetLatest_ShouldReturn2Quotes_WhenAskForQuotesWith2IsinAndOneMic ( FakeApiRequest request )
         {
             Regex regex = new Regex ( "(isin=(?<isin>[A-Z0-9,]+))|(mic=(?<mic>[A-Z]+))" );
 
             Assert.NotNull ( request.Params );
-            Assert.Equal("quotes", request.Params[0]);
+            Assert.Equal("quotes/latest", request.Params[0]);
 
             string httpParmas = request.Params[1].ToString ();
             Assert.NotNull(httpParmas);
@@ -98,7 +98,7 @@ namespace LemonMarkets.UnitTests
             return Task.FromResult ( response );
         }
 
-        #endregion Get_ShouldReturn2Quotes_WhenAskForQuotesWith2IsinAndOneMic
+        #endregion GetLatest_ShouldReturn2Quotes_WhenAskForQuotesWith2IsinAndOneMic
 
         #region Get_ShouldReturn3Quotes_WhenAskForQuotesWith2IsinAndATimeRange
 
