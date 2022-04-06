@@ -12,7 +12,7 @@ using LemonMarkets.Models.Filters;
 namespace LemonMarkets.Repos.V1
 {
 
-    public class PositionsRepo : IPortfolioRepo, IPositionsRepo
+    public class PositionsRepo : IPositionsRepo
     {
 
         #region vars
@@ -31,24 +31,6 @@ namespace LemonMarkets.Repos.V1
         #endregion ctor
 
         #region methods
-
-        public Task<LemonResults<PortfolioEntry>> GetAsync ( RequestGetPortfolio? request = null )
-        {
-            if ( request == null ) return this.tradingApi.GetAsync<LemonResults<PortfolioEntry>> ("positions")!;
-
-            List<string> param = new List<string>();
-
-            if (request.Isins.Count != 0) param.Add($"isin={string.Join(',', request.Isins)}");
-
-            if (param.Count == 0) return this.tradingApi.GetAsync<LemonResults<PortfolioEntry>> ("positions")!;
-
-            StringBuilder buildParams = new ();
-            buildParams.Append("?");
-            buildParams.AppendJoin("&", param);
-
-            return this.tradingApi.GetAsync<LemonResults<PortfolioEntry>> ("positions", buildParams)!;
-        }
-
         public Task<LemonResults<PositionEntry>> GetAsync(PositionSearchFilter? filter = null)
         {
             if ( filter is null ) return this.tradingApi.GetAsync<LemonResults<PositionEntry>> ("positions")!;
