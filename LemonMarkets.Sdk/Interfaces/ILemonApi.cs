@@ -32,19 +32,7 @@ namespace LemonMarkets.Interfaces
             get;
         }
 
-        [Obsolete("Please Use Positions")]
-        IPortfolioRepo Portfolio
-        {
-            get;
-        }
-
         IPositionsRepo Positions
-        {
-            get;
-        }
-
-        [Obsolete("Please Use Bankstaments")]
-        ITransactionsRepo Transactions
         {
             get;
         }

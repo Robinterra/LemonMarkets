@@ -110,12 +110,10 @@ namespace LemonMarkets.UnitTests
             IQuotesRepo quotesRepo = new QuotesRepo(apiClient);
 
             List<string> isins = new List<string> {"DE123456", "DE123457"};
-            DateTime to = DateTime.Parse("2022-03-13");
-            DateTime from = DateTime.Parse("2022-02-10");
-            QuoteSearchFilter filter = new( isins, to: to, from: from);
+            QuoteLatestSearchFilter filter = new( isins );
 
             // Act
-            LemonResults<Quote> results = await quotesRepo.GetAsync ( filter );
+            LemonResults<Quote> results = await quotesRepo.GetLatestAsync ( filter );
 
             // Assert
             Assert.NotNull ( results );
@@ -123,19 +121,16 @@ namespace LemonMarkets.UnitTests
             Assert.Equal(200, results.HttpCode);
             Assert.Null(results.Exception);
             Assert.NotNull(results.Results);
-            Assert.Equal(3, results.Results.Count);
+            Assert.Equal(4, results.Results.Count);
 
             Quote quote = results.Results.Find ( t => t.Isin == "DE123456" );
             Assert.NotNull(quote);
-            Assert.Equal(to, quote.Time);
 
             quote = results.Results.Find ( t => t.Isin == "DE123457" );
             Assert.NotNull(quote);
-            Assert.Equal(DateTime.Parse("2022-02-25"), quote.Time);
 
             quote = results.Results.LastOrDefault ( t => t.Isin == "DE123456" );
             Assert.NotNull(quote);
-            Assert.Equal(from, quote.Time);
         }
 
         private Task<FakeApiResponse> ApiClient_Get_ShouldReturn3Quotes_WhenAskForQuotesWith2IsinAndATimeRange ( FakeApiRequest request )
@@ -143,7 +138,7 @@ namespace LemonMarkets.UnitTests
             Regex regex = new Regex ( "(isin=(?<isin>[A-Z0-9,]+))|(to=(?<to>[0-9-T.:]+))|(from=(?<from>[0-9-T.:]+))" );
 
             Assert.NotNull ( request.Params );
-            Assert.Equal("quotes", request.Params[0]);
+            Assert.Equal("quotes/latest", request.Params[0]);
 
             string httpParmas = request.Params[1].ToString ();
             Assert.NotNull(httpParmas);
