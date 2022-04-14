@@ -14,7 +14,8 @@ namespace LemonMarkets.Models.Enums
         Order_sell,
         Eod_Balance,
         Dividend,
-        Tax
+        Tax_earned,
+        Tax_refund
 
     }
 
