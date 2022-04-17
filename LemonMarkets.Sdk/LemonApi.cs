@@ -57,6 +57,11 @@ namespace LemonMarkets
             get;
         }
 
+        public IPositionStatementsRepo PositionStatements
+        {
+            get;
+        }
+
         public IBankstatementsRepo Bankstatements
         {
             get;
@@ -120,6 +125,7 @@ namespace LemonMarkets
             this.Account = new AccountRepo(this.TradingApi);
             this.Orders = new OrdersRepo(this.TradingApi);
             this.Positions = new PositionsRepo(this.TradingApi);
+            this.PositionStatements = new PositionStatementsRepo(this.TradingApi);
             this.Bankstatements = new BankstatementsRepo ( this.TradingApi );
 
             this.Venues = new VenuesRepo (this.MarketDataApi);

@@ -8,10 +8,10 @@ using LemonMarkets.Models.Responses;
 namespace LemonMarkets.Interfaces
 {
 
-    public interface IPositionsRepo
+    public interface IPositionStatementsRepo
     {
 
-        Task<LemonResults<PositionEntry>> GetAsync ( PositionSearchFilter? filter = null );
+        Task<LemonResults<Statement>> GetAsync(StatementSearchFilter? filter = null);
 
     }
 

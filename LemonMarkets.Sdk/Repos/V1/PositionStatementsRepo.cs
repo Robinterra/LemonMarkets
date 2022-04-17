@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
@@ -13,7 +13,7 @@ using LemonMarkets.Interfaces;
 namespace LemonMarkets.Repos.V1
 {
 
-    public class PositionsRepo : IPositionsRepo
+    public class PositionStatementsRepo : IPositionStatementsRepo
     {
 
         #region vars
@@ -24,7 +24,7 @@ namespace LemonMarkets.Repos.V1
 
         #region ctor
 
-        public PositionsRepo ( IApiClient tradingApi )
+        public PositionStatementsRepo ( IApiClient tradingApi )
         {
             this.tradingApi = tradingApi;
         }
@@ -33,21 +33,21 @@ namespace LemonMarkets.Repos.V1
 
         #region methods
 
-        public Task<LemonResults<PositionEntry>> GetAsync(PositionSearchFilter? filter = null)
+        public Task<LemonResults<Statement>> GetAsync(StatementSearchFilter? filter = null)
         {
-            if ( filter is null ) return this.tradingApi.GetAsync<LemonResults<PositionEntry>> ("positions")!;
+            if ( filter is null ) return this.tradingApi.GetAsync<LemonResults<Statement>> ("positions/statements")!;
 
             List<string> param = new List<string>();
 
-            if (filter.Isins.Count != 0) param.Add($"isin={string.Join(',', filter.Isins)}");
+            if (filter.Type != Models.Enums.PositionStatementType.All) param.Add($"type={filter.Type.ToString().ToLower()}");
 
-            if (param.Count == 0) return this.tradingApi.GetAsync<LemonResults<PositionEntry>> ("positions")!;
+            if (param.Count == 0) return this.tradingApi.GetAsync<LemonResults<Statement>> ("positions/statements")!;
 
             StringBuilder buildParams = new ();
             buildParams.Append("?");
             buildParams.AppendJoin("&", param);
 
-            return this.tradingApi.GetAsync<LemonResults<PositionEntry>> ("positions", buildParams)!;
+            return this.tradingApi.GetAsync<LemonResults<Statement>> ("positions/statements", buildParams)!;
         }
 
         #endregion methods
