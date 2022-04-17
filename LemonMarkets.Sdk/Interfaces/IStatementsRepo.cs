@@ -5,13 +5,13 @@ using LemonMarkets.Models.Filters;
 using LemonMarkets.Models.Requests.Trading;
 using LemonMarkets.Models.Responses;
 
-namespace lemon.LemonMarkets.Interfaces
+namespace LemonMarkets.Interfaces
 {
 
-    public interface IPositionsRepo
+    public interface IPositionStatementsRepo
     {
 
-        Task<LemonResults<PositionEntry>> GetAsync ( PositionSearchFilter? filter = null );
+        Task<LemonResults<Statement>> GetAsync(StatementSearchFilter? filter = null);
 
     }
 
