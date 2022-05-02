@@ -28,7 +28,7 @@ ILemonApi? lemonApi = LemonApi.Build(apiKey, tradingMode);
 
 #region PositionStatements
 
-LemonResults<Statement> result = await lemonApi!.PositionStatements.GetAsync();
+LemonResults<PositionEntry> result = await lemonApi!.Positions.GetAsync();
 
 // Sollte bei vom HttpClient oder beim Deserialiseren eine exception hochkommen gebe ich die Exception über das Result Objekt zurück
 if (result.Exception is not null)
@@ -48,7 +48,7 @@ if (!result.IsSuccess || result.Results is null)
 
 for (int i = 0; i < result.Results.Count; i++)
 {
-    Statement current = result.Results[i];
+    PositionEntry current = result.Results[i];
 
     await Console.Out.WriteLineAsync($"{i}: '{current.Isin_title}' {current.Quantity} Stück");
 }

@@ -8,6 +8,7 @@ namespace LemonMarkets.Models.Enums
     {
         All,
         Limit,
+        Stop,
         Market,
         Stop_Limit,
         Stop_Market
