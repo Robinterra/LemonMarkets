@@ -35,7 +35,7 @@ namespace LemonMarkets.Models
         /// <summary>
         /// 3 letter abbreviation, e.g. "EUR" or "USD"
         /// </summary>
-        public Currency Currency
+        public string? Currency
         {
             get;
         }
@@ -52,7 +52,7 @@ namespace LemonMarkets.Models
 
         #region ctor
 
-        public InstrumentSearchFilter ( string? isin = null, string? mic = null, Currency currency = Currency.None, bool? isTradable = null, string? search = null, List<string>? isins = null)
+        public InstrumentSearchFilter ( string? isin = null, string? mic = null, string? currency = null, bool? isTradable = null, string? search = null, List<string>? isins = null)
         {
             if (isins != null) this.Isins = isins;
             else this.Isins = new List<string>();
