@@ -76,8 +76,7 @@ namespace LemonMarkets.Models
             set;
         }
 
-        [JsonConverter(typeof(JsonStringEnumConverter))]
-        public Currency Currency
+        public string? Currency
         {
             get;
             set;
