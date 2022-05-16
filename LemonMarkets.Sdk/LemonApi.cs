@@ -4,10 +4,10 @@ using System.Linq;
 using System.Threading;
 using WsApiCore;
 using System.Security.Cryptography.X509Certificates;
-using lemon.LemonMarkets.Interfaces;
 using LemonMarkets.Repos.V1;
 using ApiService;
 using System;
+using LemonMarkets.Services;
 
 namespace LemonMarkets
 {
@@ -21,6 +21,8 @@ namespace LemonMarkets
         #region vars
 
         public static string apiDataBaseUrl = "https://data.lemon.markets";
+
+        public static string apiRealtimeUrl = "https://realtime.lemon.markets";
 
         public static string apiPaperTradingBaseUrl = "https://paper-trading.lemon.markets";
 
@@ -81,6 +83,11 @@ namespace LemonMarkets
             get;
         }
 
+        public ILivestreamService Livestream
+        {
+            get;
+        }
+
         public IQuotesRepo Quotes
         {
             get;
@@ -114,7 +121,7 @@ namespace LemonMarkets
 
         #region ctor
 
-        public LemonApi(string apiKey, ConnectionInfo connectionInfo, IApiClient tradingApi, IApiClient marketDataApi)
+        public LemonApi(string apiKey, ConnectionInfo connectionInfo, IApiClient tradingApi, IApiClient marketDataApi, IApiClient realtimeApi)
         {
             this.ConnectionInfo = connectionInfo;
             this.ApiKey = apiKey;
@@ -133,6 +140,8 @@ namespace LemonMarkets
             this.Instruments = new InstrumentsRepo ( this.MarketDataApi );
             this.OHLC = new OpenHighLowCloseRepo(this.MarketDataApi);
             this.Trades = new TradesRepo(this.MarketDataApi);
+
+            this.Livestream = new MqttQoutesLivestreamService(realtimeApi, this.TradingApi);
         }
 
         #endregion ctor
@@ -143,7 +152,7 @@ namespace LemonMarkets
         {
             string tradingUrl = mode == MoneyTradingMode.Paper ? apiPaperTradingBaseUrl : apiRealTradingBaseUrl;
 
-            ConnectionInfo connectionInfo = new ConnectionInfo(apiDataBaseUrl, tradingUrl);
+            ConnectionInfo connectionInfo = new ConnectionInfo(apiDataBaseUrl, tradingUrl, apiRealtimeUrl);
 
             ApiClient tradingApi = new ApiClient(connectionInfo.TradingAdress, "v1");
             tradingApi.CheckCertEasy += Api_CheckCertEasy;
@@ -153,7 +162,11 @@ namespace LemonMarkets
             marketDataApi.CheckCertEasy += Api_CheckCertEasy;
             marketDataApi.SetNewAuth ( apiKey );
 
-            return new LemonApi(apiKey, connectionInfo, tradingApi, marketDataApi);
+            ApiClient realtimeApi = new ApiClient(connectionInfo.RealtimeAdress, "v1");
+            realtimeApi.CheckCertEasy += Api_CheckCertEasy;
+            realtimeApi.SetNewAuth ( apiKey );
+
+            return new LemonApi(apiKey, connectionInfo, tradingApi, marketDataApi, realtimeApi);
         }
 
         #endregion methods

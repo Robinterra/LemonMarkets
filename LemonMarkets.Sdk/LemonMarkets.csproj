@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
-    <Version>1.0.5</Version>
+    <Version>1.0.5-alpha</Version>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <RepositoryUrl>https://github.com/Robinterra/LemonMarkets</RepositoryUrl>
     <Description>Community C# Library #2 for Lemon Markets</Description>
@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <PackageReference Include="ApiService" Version="1.0.8" />
+    <PackageReference Include="MQTTnet" Version="4.0.0-preview5" />
   </ItemGroup>
 
 </Project>

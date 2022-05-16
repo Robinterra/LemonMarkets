@@ -1,5 +1,4 @@
 ﻿using System;
-using lemon.LemonMarkets.Interfaces;
 using LemonMarkets.Models;
 
 namespace LemonMarkets.Interfaces
@@ -36,6 +35,12 @@ namespace LemonMarkets.Interfaces
         {
             get;
         }
+
+        ILivestreamService Livestream
+        {
+            get;
+        }
+
 
         IPositionStatementsRepo PositionStatements
         {
