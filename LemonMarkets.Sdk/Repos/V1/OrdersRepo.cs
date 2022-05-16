@@ -1,5 +1,4 @@
-﻿using lemon.LemonMarkets.Interfaces;
-using LemonMarkets.Interfaces;
+﻿using LemonMarkets.Interfaces;
 using LemonMarkets.Models;
 using LemonMarkets.Models.Enums;
 using LemonMarkets.Models.Requests.Trading;

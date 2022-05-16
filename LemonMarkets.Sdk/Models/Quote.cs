@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.Json.Serialization;
+using LemonMarkets.Helper;
 
 namespace LemonMarkets.Models
 {
@@ -62,6 +63,7 @@ namespace LemonMarkets.Models
         /// Timestamp of point in time the Quote occured at
         /// </summary>
         [JsonPropertyName ( "t" )]
+        [JsonConverter(typeof(JsonUnixDateTimeConverter))]
         public DateTime Time
         {
             get;

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ApiService;
-using lemon.LemonMarkets.Interfaces;
 
 namespace LemonMarkets.Models.Responses
 {

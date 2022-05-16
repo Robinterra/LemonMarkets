@@ -10,7 +10,6 @@ using LemonMarkets.Models.Responses;
 using Xunit;
 using LemonMarkets.Repos.V1;
 using LemonMarkets.Interfaces;
-using lemon.LemonMarkets.Interfaces;
 using LemonMarkets.Models.Filters;
 using LemonMarkets.Models.Enums;
 
