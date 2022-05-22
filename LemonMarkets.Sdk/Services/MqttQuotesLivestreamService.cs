@@ -35,7 +35,10 @@ namespace LemonMarkets.Services
         private List<string> subscribeIsins;
 
         private IApiClient livestreamApi;
+
         private IApiClient tradingApi;
+
+        private string userId;
 
         #endregion get/set
 
@@ -45,6 +48,7 @@ namespace LemonMarkets.Services
         {
             this.subscribeIsins = new List<string>();
 
+            this.userId = string.Empty;
             this.livestreamApi = realtimeApi;
             this.tradingApi = tradingApi;
         }
@@ -83,6 +87,13 @@ namespace LemonMarkets.Services
             TokenResponse? response = await this.livestreamApi.PostAsync<TokenResponse>("auth");
             if (response is null) return;
 
+            LemonResult<LemonMarketUser>? user = await this.tradingApi.GetAsync<LemonResult<LemonMarketUser>>("user");
+            if (user is null) return;
+            if (user.Results is null) return;
+            if (string.IsNullOrEmpty(user.Results.User_id)) return;
+
+            this.userId = user.Results.User_id;
+
             MqttFactory factory = new MqttFactory();
             this.mQTTClient = factory.CreateMqttClient();
             this.mQTTClient.ApplicationMessageReceivedAsync += this.SubscribeOnMqttClient;
@@ -108,13 +119,6 @@ namespace LemonMarkets.Services
         private async Task OnConnectionInit(MqttClientConnectedEventArgs arg)
         {
             if (this.mQTTClient is null) return;
-
-            LemonResult<LemonMarketUser>? user = await this.tradingApi.GetAsync<LemonResult<LemonMarketUser>>("user");
-            if (user is null) return;
-            if (user.Results is null) return;
-            if (string.IsNullOrEmpty(user.Results.User_id)) return;
-
-            string userId = user.Results.User_id;
 
             await this.mQTTClient.SubscribeAsync(userId);
 

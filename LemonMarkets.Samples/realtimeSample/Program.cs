@@ -28,16 +28,20 @@ ILemonApi lemonApi = LemonApi.Build(apiKey, tradingMode);
 
 ILivestreamService livestreamService = lemonApi.Livestream;
 
+// Add Subscription on 3 Isins
 await livestreamService.AddSubscriptionOnIsin("DE0008404005");
 await livestreamService.AddSubscriptionOnIsin("DE0006231004");
+await livestreamService.AddSubscriptionOnIsin("DE0007100000");
 
+// Start to listen on the livestream
 await livestreamService.ConnectAndSubscribeOnStream
 (
-    async quote =>
-        await Console.Out.WriteLineAsync($"Isin: {quote.Isin} (Bid: {quote.Bid} / Ask: {quote.Ask})"),
+    // Print a incoming Quote in the Console
+    async quote => await Console.Out.WriteLineAsync($"Isin: {quote.Isin} (Bid: {quote.Bid} / Ask: {quote.Ask})"),
     () => Task.CompletedTask
 );
 
+// Let the program still running
 while (true)
 {
     await Task.Delay(100);
