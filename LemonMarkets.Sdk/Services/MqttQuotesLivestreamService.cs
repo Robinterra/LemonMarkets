@@ -79,8 +79,18 @@ namespace LemonMarkets.Services
             await this.mQTTClient.ConnectAsync(this.mqttOptions);
         }
 
+        public Task Disconnect()
+        {
+            if (this.mQTTClient is null) return Task.CompletedTask;
+            if (!this.mQTTClient.IsConnected) return Task.CompletedTask;
+
+            return this.mQTTClient.DisconnectAsync();
+        }
+
         public async Task ConnectAndSubscribeOnStream(SubscribeDelegate subscribtion, DisconnectedDelegate disconnected)
         {
+            if (this.mQTTClient is not null && this.mQTTClient.IsConnected) return;
+
             this.Disconnected = disconnected;
             this.Subscribe = subscribtion;
 
