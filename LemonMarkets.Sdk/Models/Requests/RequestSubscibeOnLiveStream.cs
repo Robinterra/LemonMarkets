@@ -24,7 +24,7 @@ namespace LemonMarkets.Models.Requests
 
         public RequestSubscribeOnLivestream(List<string> isins)
         {
-            string subscribeisins = string.Join(',', isins);
+            string subscribeisins = $",{string.Join(',', isins)},";
 
             this.Name = "isins";
             this.Data = subscribeisins;
