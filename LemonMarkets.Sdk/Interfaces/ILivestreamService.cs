@@ -8,6 +8,8 @@ namespace LemonMarkets.Interfaces
     public interface ILivestreamService
     {
 
+        Task Disconnect();
+
         Task AddSubscriptionOnIsin(string isin);
 
         Task SetNewSubscriptionList(List<string> isins);
