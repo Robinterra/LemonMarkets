@@ -24,7 +24,7 @@ if (string.IsNullOrEmpty(apiKey))
 // da ich vorhabe den Ctor noch regelmäßig zu verändern.
 // Bei der Build methode muss der Api Key und den Trade Mode übergeben werden.
 // Beim abfragen von daten ist es nicht relevant ob Paper oder Money eingestellt ist, da es nur eine API für die datenabfrage existiert.
-ILemonApi lemonApi = LemonApi.Build(apiKey, tradingMode);
+ILemonApi lemonApi = LemonApi.Build(apiKey, apiKey, tradingMode);
 
 ILivestreamService livestreamService = lemonApi.Livestream;
 
