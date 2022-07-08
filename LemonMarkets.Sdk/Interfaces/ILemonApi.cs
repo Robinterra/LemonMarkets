@@ -11,7 +11,7 @@ namespace LemonMarkets.Interfaces
             get;
         }
 
-        string ApiKey
+        string MarketKey
         {
             get;
         }
