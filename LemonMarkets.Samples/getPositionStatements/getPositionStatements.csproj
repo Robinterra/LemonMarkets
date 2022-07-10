@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LemonMarkets" Version="1.1.15" />
+    <ProjectReference Include="..\..\LemonMarkets.Sdk\LemonMarkets.csproj" />
   </ItemGroup>
 
 </Project>

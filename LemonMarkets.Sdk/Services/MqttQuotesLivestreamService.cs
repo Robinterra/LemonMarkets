@@ -28,7 +28,7 @@ namespace LemonMarkets.Services
 
         //static Regex regex = new Regex("\"t\":[0-9]*,", RegexOptions.Compiled);
 
-        private MqttClient? mQTTClient;
+        private IMqttClient? mQTTClient;
 
         private MqttClientOptions? mqttOptions;
 
