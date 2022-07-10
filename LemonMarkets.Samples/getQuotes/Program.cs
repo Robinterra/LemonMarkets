@@ -7,13 +7,22 @@ using LemonMarkets.Models.Requests.Trading;
 using LemonMarkets.Models.Responses;
 
 // Du kannst dein api key auch direkt hier einfügen, dafür einfach zeile 10 auskommentieren und dann zeile 11 verwenden.
-string? apiKey = Environment.GetEnvironmentVariable("apikey");
+string? tradingKey = Environment.GetEnvironmentVariable("tradingKey");
 //string apiKey = "hier api key einfügen";
+string? marketKey = Environment.GetEnvironmentVariable("marketKey");
+//string marketKey = "hier api key einfügen";
 
 // Ändere zu Money, wenn du mit echten Geld handelst. Für diesen Beispiel nutze ich den mode auf Paper.
 LemonApi.MoneyTradingMode tradingMode = LemonApi.MoneyTradingMode.Paper;
 
-if (string.IsNullOrEmpty(apiKey))
+if (string.IsNullOrEmpty(tradingKey))
+{
+    await Console.Error.WriteLineAsync("es wurde kein api key über die Enviroment Variabeln angegeben");
+
+    return 1;
+}
+
+if (string.IsNullOrEmpty(marketKey))
 {
     await Console.Error.WriteLineAsync("es wurde kein api key über die Enviroment Variabeln angegeben");
 
@@ -24,7 +33,7 @@ if (string.IsNullOrEmpty(apiKey))
 // da ich vorhabe den Ctor noch regelmäßig zu verändern.
 // Bei der Build methode muss der Api Key und den Trade Mode übergeben werden.
 // Beim abfragen von daten ist es nicht relevant ob Paper oder Money eingestellt ist, da es nur eine API für die datenabfrage existiert.
-ILemonApi lemonApi = LemonApi.Build(apiKey, tradingMode);
+ILemonApi lemonApi = LemonApi.Build(marketKey, tradingKey, tradingMode);
 
 #region getQuotes
 

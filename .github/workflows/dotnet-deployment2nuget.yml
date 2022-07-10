@@ -23,8 +23,8 @@ jobs:
     - name: Build
       run: dotnet build -c Release ./LemonMarkets.Sdk/LemonMarkets.csproj
     - name: Pack
-      run: dotnet pack -c Release -p:PackageVersion=1.1.${{ github.run_number }}-alpha ./LemonMarkets.Sdk/LemonMarkets.csproj
+      run: dotnet pack -c Release -p:PackageVersion=1.1.${{ github.run_number }} ./LemonMarkets.Sdk/LemonMarkets.csproj
     - name: Deploy
-      run: dotnet nuget push ./LemonMarkets.Sdk/bin/Release/LemonMarkets.1.1.${{ github.run_number }}-alpha.nupkg -k ${NugetApiKey} -s https://api.nuget.org/v3/index.json
+      run: dotnet nuget push ./LemonMarkets.Sdk/bin/Release/LemonMarkets.1.1.${{ github.run_number }}.nupkg -k ${NugetApiKey} -s https://api.nuget.org/v3/index.json
       env:
         NugetApiKey: ${{ secrets.NugetApiKey }}
