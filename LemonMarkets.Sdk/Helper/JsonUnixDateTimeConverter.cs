@@ -21,7 +21,7 @@ namespace LemonMarkets.Helper
             {
                 long time = reader.GetInt64();
 
-                return _epoch.AddMilliseconds( time / 1000d);
+                return _epoch.AddMilliseconds( time );
             }
             if (reader.TokenType == JsonTokenType.String)
             {
