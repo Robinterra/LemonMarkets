@@ -145,8 +145,6 @@ namespace LemonMarkets.Services
 
             Quote? quote = System.Text.Json.JsonSerializer.Deserialize<Quote>(stream, options: new () {PropertyNameCaseInsensitive = true });
             if (quote is null) return;
-            quote.Bid /= 10000;
-            quote.Ask /= 10000;
 
             if (this.Subscribe is not null) await this.Subscribe(quote);
         }

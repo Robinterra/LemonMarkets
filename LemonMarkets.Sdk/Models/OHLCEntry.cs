@@ -22,7 +22,7 @@ namespace LemonMarkets.Models
         /// Open Price in specific time period
         /// </summary>
         [JsonPropertyName("o")]
-        public decimal Open
+        public long Open
         {
             get;
             set;
@@ -32,7 +32,7 @@ namespace LemonMarkets.Models
         /// High Price in specific time period
         /// </summary>
         [JsonPropertyName("h")]
-        public decimal High
+        public long High
         {
             get;
             set;
@@ -42,7 +42,7 @@ namespace LemonMarkets.Models
         /// Low Price in specific time period
         /// </summary>
         [JsonPropertyName("l")]
-        public decimal Low
+        public long Low
         {
             get;
             set;
@@ -52,7 +52,7 @@ namespace LemonMarkets.Models
         /// Close Price in specific time period
         /// </summary>
         [JsonPropertyName("c")]
-        public decimal Close
+        public long Close
         {
             get;
             set;
@@ -81,7 +81,7 @@ namespace LemonMarkets.Models
         /// Price by Volume (Sum of (quantity * last price)) of instrument in specific time period
         /// </summary>
         [JsonPropertyName("pbv")]
-        public decimal PriceByVolume
+        public long PriceByVolume
         {
             get;
             set;
