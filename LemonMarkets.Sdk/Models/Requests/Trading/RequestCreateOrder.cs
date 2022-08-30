@@ -61,7 +61,7 @@ namespace LemonMarkets.Models.Requests.Trading
         /// Stop Price for your Order.
         /// Please see here for information on the numbers format in the Trading API.
         /// </summary>
-        public decimal? Stop_price
+        public long? Stop_price
         {
             get;
         }
@@ -70,7 +70,7 @@ namespace LemonMarkets.Models.Requests.Trading
         /// Limit Price for your Order.
         /// Please see here for information on the numbers format in the Trading API.
         /// </summary>
-        public decimal? Limit_price
+        public long? Limit_price
         {
             get;
         }
@@ -87,7 +87,7 @@ namespace LemonMarkets.Models.Requests.Trading
 
         #region ctor
 
-        public RequestCreateOrder(string isin, DateTime expires, OrderSide side, int quantity, string venue, decimal? stop = null, decimal? limit = null, string? notes = null)
+        public RequestCreateOrder(string isin, DateTime expires, OrderSide side, int quantity, string venue, long? stop = null, long? limit = null, string? notes = null)
         {
             this.Isin = isin;
             this.Expires_at = expires;
@@ -96,6 +96,18 @@ namespace LemonMarkets.Models.Requests.Trading
             this.Venue = venue;
             this.Stop_price = stop;
             this.Limit_price = limit;
+            this.Notes = notes;
+        }
+
+        public RequestCreateOrder(string isin, DateTime expires, OrderSide side, int quantity, string venue, decimal? stop = null, decimal? limit = null, string? notes = null)
+        {
+            this.Isin = isin;
+            this.Expires_at = expires;
+            this.Side = side;
+            this.Quantity = quantity;
+            this.Venue = venue;
+            this.Stop_price = stop is null ? null : (long)(stop * 10000);
+            this.Limit_price = limit is null ? null : (long)(limit * 10000);
             this.Notes = notes;
         }
 

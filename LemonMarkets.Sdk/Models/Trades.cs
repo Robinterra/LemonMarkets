@@ -22,7 +22,7 @@ namespace LemonMarkets.Models
         /// Price the trade happend at
         /// </summary>
         [JsonPropertyName("p")]
-        public decimal Price
+        public long Price
         {
             get;
             set;

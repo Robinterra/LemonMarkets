@@ -43,7 +43,7 @@ namespace LemonMarkets.Models
         /// The maximum price the buyer is willing to pay for a specific instrument.
         /// </summary>
         [JsonPropertyName ( "b" )]
-        public decimal Bid
+        public long Bid
         {
             get;
             set;
@@ -53,7 +53,7 @@ namespace LemonMarkets.Models
         /// The minimum price the seller is willing to sell the specific instrument for.
         /// </summary>
         [JsonPropertyName ( "a" )]
-        public decimal Ask
+        public long Ask
         {
             get;
             set;
