@@ -1,5 +1,6 @@
 using System;
 using System.Text.Json.Serialization;
+using LemonMarkets.Helper;
 
 namespace LemonMarkets.Models
 {
@@ -22,7 +23,8 @@ namespace LemonMarkets.Models
         /// Price the trade happend at
         /// </summary>
         [JsonPropertyName("p")]
-        public long Price
+        [JsonConverter(typeof(JsonDecimalIntConverter))]
+        public decimal Price
         {
             get;
             set;
