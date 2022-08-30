@@ -87,18 +87,6 @@ namespace LemonMarkets.Models.Requests.Trading
 
         #region ctor
 
-        public RequestCreateOrder(string isin, DateTime expires, OrderSide side, int quantity, string venue, long? stop = null, long? limit = null, string? notes = null)
-        {
-            this.Isin = isin;
-            this.Expires_at = expires;
-            this.Side = side;
-            this.Quantity = quantity;
-            this.Venue = venue;
-            this.Stop_price = stop;
-            this.Limit_price = limit;
-            this.Notes = notes;
-        }
-
         public RequestCreateOrder(string isin, DateTime expires, OrderSide side, int quantity, string venue, decimal? stop = null, decimal? limit = null, string? notes = null)
         {
             this.Isin = isin;

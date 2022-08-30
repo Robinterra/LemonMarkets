@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.Json.Serialization;
+using LemonMarkets.Helper;
 
 namespace LemonMarkets.Models
 {
@@ -22,7 +23,8 @@ namespace LemonMarkets.Models
         /// Open Price in specific time period
         /// </summary>
         [JsonPropertyName("o")]
-        public long Open
+        [JsonConverter(typeof(JsonDecimalIntConverter))]
+        public decimal Open
         {
             get;
             set;
@@ -32,7 +34,8 @@ namespace LemonMarkets.Models
         /// High Price in specific time period
         /// </summary>
         [JsonPropertyName("h")]
-        public long High
+        [JsonConverter(typeof(JsonDecimalIntConverter))]
+        public decimal High
         {
             get;
             set;
@@ -42,7 +45,8 @@ namespace LemonMarkets.Models
         /// Low Price in specific time period
         /// </summary>
         [JsonPropertyName("l")]
-        public long Low
+        [JsonConverter(typeof(JsonDecimalIntConverter))]
+        public decimal Low
         {
             get;
             set;
@@ -52,7 +56,8 @@ namespace LemonMarkets.Models
         /// Close Price in specific time period
         /// </summary>
         [JsonPropertyName("c")]
-        public long Close
+        [JsonConverter(typeof(JsonDecimalIntConverter))]
+        public decimal Close
         {
             get;
             set;
@@ -81,7 +86,8 @@ namespace LemonMarkets.Models
         /// Price by Volume (Sum of (quantity * last price)) of instrument in specific time period
         /// </summary>
         [JsonPropertyName("pbv")]
-        public long PriceByVolume
+        [JsonConverter(typeof(JsonDecimalIntConverter))]
+        public decimal PriceByVolume
         {
             get;
             set;
