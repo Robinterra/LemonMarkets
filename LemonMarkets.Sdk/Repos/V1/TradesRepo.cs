@@ -36,6 +36,7 @@ namespace LemonMarkets.Repos.V1
             List<string> param = new List<string>();
 
             param.Add($"isin={string.Join(',', request.Isins)}");
+            param.Add("decimals=false");
             if (request.Mic != null) param.Add($"mic={request.Mic}");
             if (request.Sorting != Sorting.None) param.Add($"sorting={request.Sorting}");
 
