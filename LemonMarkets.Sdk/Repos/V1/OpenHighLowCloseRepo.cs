@@ -40,6 +40,7 @@ namespace LemonMarkets.Repos.V1
             if ( request.TimeMode == OHLCTimeMode.Hourly ) timeMode = "h1";
 
             param.Add($"isin={string.Join(',', request.Isins)}");
+            param.Add("decimals=false");
             if (request.From != null) param.Add($"from={((DateTime)request.From).ToString("yyyy-MM-ddTHH:mm:ss")}");
             if (request.To != null) param.Add($"to={((DateTime)request.To).ToString("yyyy-MM-ddTHH:mm:ss")}");
             if (request.Mic != null) param.Add($"mic={request.Mic}");
