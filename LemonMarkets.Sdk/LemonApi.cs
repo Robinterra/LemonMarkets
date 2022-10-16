@@ -9,6 +9,10 @@ using ApiService;
 using System;
 using LemonMarkets.Services;
 using System.Security.Cryptography;
+using System.Threading.Tasks;
+using Cats.CertificateTransparency.Models;
+using System.Collections.Generic;
+using Cats.CertificateTransparency.Services;
 
 namespace LemonMarkets
 {
@@ -184,6 +188,11 @@ namespace LemonMarkets
         {
             if (x509Chain.ChainStatus.Any(status => status.Status == X509ChainStatusFlags.UntrustedRoot)) return false;//Assert.Fail("certifcate has no trusted root");
             //if (cert.SubjectName.Name != $"CN={hostname}") return false;//Assert.Fail("Hostname of the certificate not matched");
+
+            List<X509Certificate2> certificateChain = x509Chain.ChainElements.OfType<X509ChainElement>().Select(i => i.Certificate).ToList();
+            ICertificateTransparencyVerifier certificateVerifier = Cats.CertificateTransparency.Instance.CertificateTransparencyVerifier;
+            CtVerificationResult ctValueTask = certificateVerifier.IsValidAsync(hostname, certificateChain, CancellationToken.None).Result;
+            if (!ctValueTask.IsValid) return false;
 
             foreach (X509Extension extension in cert.Extensions)
             {

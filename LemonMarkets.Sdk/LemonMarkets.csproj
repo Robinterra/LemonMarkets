@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <PackageReference Include="ApiService" Version="1.0.8" />
+    <PackageReference Include="Cats.CertificateTransparency" Version="2.0.0" />
     <PackageReference Include="MQTTnet" Version="4.0.1.184" />
   </ItemGroup>
 
