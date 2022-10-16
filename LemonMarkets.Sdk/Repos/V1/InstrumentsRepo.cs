@@ -32,7 +32,7 @@ namespace LemonMarkets.Repos.V1
 
         public Task<LemonResults<Instrument>> GetAsync ( InstrumentSearchFilter? request = null )
         {
-            if (request == null) return this.marketApi.GetAsync<LemonResults<Instrument>> ("instruments")!;
+            if (request == null) return this.GetAsync("instruments")!;
 
             List<string> param = new List<string>();
 
@@ -42,15 +42,22 @@ namespace LemonMarkets.Repos.V1
             if (request.Currency != null) param.Add($"currency={request.Currency}");
             if (request.IsTradable != null) param.Add($"tradable={request.IsTradable}");
 
-            if (param.Count == 0) return this.marketApi.GetAsync<LemonResults<Instrument>> ("instruments")!;
+            if (param.Count == 0) return this.GetAsync("instruments")!;
 
             StringBuilder buildParams = new ();
             buildParams.Append("?");
             buildParams.AppendJoin("&", param);
 
-            return this.marketApi.GetAsync<LemonResults<Instrument>> ("instruments", buildParams)!;
+            return this.GetAsync("instruments", buildParams)!;
         }
-        
+
+        private async Task<LemonResults<Instrument>> GetAsync(params object[] header)
+        {
+            LemonResultsInternal<Instrument> result = (await this.marketApi.GetAsync<LemonResultsInternal<Instrument>> (header))!;
+
+            return new LemonResults<Instrument>(result, new PageLoader<Instrument>(this.marketApi));
+        }
+
         #endregion methods
 
     }

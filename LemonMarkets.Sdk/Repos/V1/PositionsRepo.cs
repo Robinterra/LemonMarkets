@@ -35,19 +35,26 @@ namespace LemonMarkets.Repos.V1
 
         public Task<LemonResults<PositionEntry>> GetAsync(PositionSearchFilter? filter = null)
         {
-            if ( filter is null ) return this.tradingApi.GetAsync<LemonResults<PositionEntry>> ("positions")!;
+            if ( filter is null ) return this.GetAsync("positions");
 
             List<string> param = new List<string>();
 
             if (filter.Isins.Count != 0) param.Add($"isin={string.Join(',', filter.Isins)}");
 
-            if (param.Count == 0) return this.tradingApi.GetAsync<LemonResults<PositionEntry>> ("positions")!;
+            if (param.Count == 0) return this.GetAsync("positions");
 
             StringBuilder buildParams = new ();
             buildParams.Append("?");
             buildParams.AppendJoin("&", param);
 
-            return this.tradingApi.GetAsync<LemonResults<PositionEntry>> ("positions", buildParams)!;
+            return this.GetAsync("positions", buildParams);
+        }
+
+        private async Task<LemonResults<PositionEntry>> GetAsync(params object[] header)
+        {
+            LemonResultsInternal<PositionEntry> result = (await this.tradingApi.GetAsync<LemonResultsInternal<PositionEntry>> (header))!;
+
+            return new LemonResults<PositionEntry>(result, new PageLoader<PositionEntry>(this.tradingApi));
         }
 
         #endregion methods

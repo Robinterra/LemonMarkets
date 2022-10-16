@@ -50,8 +50,16 @@ namespace LemonMarkets.Repos.V1
             buildParams.Append("?");
             buildParams.AppendJoin("&", param);
 
-            return this.marketApi.GetAsync<LemonResults<OHLCEntry>> ("ohlc", timeMode, buildParams)!;
+            return this.GetAsync("ohlc", timeMode, buildParams)!;
         }
+
+        private async Task<LemonResults<OHLCEntry>> GetAsync(params object[] header)
+        {
+            LemonResultsInternal<OHLCEntry> result = (await this.marketApi.GetAsync<LemonResultsInternal<OHLCEntry>> (header))!;
+
+            return new LemonResults<OHLCEntry>(result, new PageLoader<OHLCEntry>(this.marketApi));
+        }
+
 
         #endregion methods
 

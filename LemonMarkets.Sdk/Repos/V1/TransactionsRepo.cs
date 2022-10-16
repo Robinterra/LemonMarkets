@@ -34,7 +34,7 @@ namespace LemonMarkets.Repos.V1
 
         public Task<LemonResults<BankStatement>> GetAsync(BankStatementsFilter? request = null)
         {
-            if (request == null) return this.tradingApi.GetAsync<LemonResults<BankStatement>> ("account/bankstatements")!;
+            if (request == null) return this.GetAsync("account/bankstatements");
 
             List<string> param = new List<string>();
 
@@ -44,13 +44,20 @@ namespace LemonMarkets.Repos.V1
             if (request.Type != BankstatementType.None) param.Add($"type={request.Type.ToString()}");
             if (request.Sorting != Sorting.None) param.Add($"sorting={request.Sorting}");
 
-            if (param.Count == 0) return this.tradingApi.GetAsync<LemonResults<BankStatement>> ("account/bankstatements")!;
+            if (param.Count == 0) return this.GetAsync("account/bankstatements");
 
             StringBuilder buildParams = new ();
             buildParams.Append("?");
             buildParams.AppendJoin("&", param);
 
-            return this.tradingApi.GetAsync<LemonResults<BankStatement>> ("account/bankstatements", buildParams)!;
+            return this.GetAsync("account/bankstatements", buildParams);
+        }
+
+        private async Task<LemonResults<BankStatement>> GetAsync(params object[] header)
+        {
+            LemonResultsInternal<BankStatement> result = (await this.tradingApi.GetAsync<LemonResultsInternal<BankStatement>> (header))!;
+
+            return new LemonResults<BankStatement>(result, new PageLoader<BankStatement>(this.tradingApi));
         }
 
         #endregion methods

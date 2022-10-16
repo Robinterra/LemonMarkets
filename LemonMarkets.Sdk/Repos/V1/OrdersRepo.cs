@@ -42,7 +42,7 @@ namespace LemonMarkets.Repos.V1
 
         public Task<LemonResults<Order>> GetAsync(OrderSearchFilter? request = null)
         {
-            if (request == null) return this.tradingApi.GetAsync<LemonResults<Order>>("orders")!;
+            if (request == null) return this.GetAsyncLocal("orders");
 
             List<string> param = new List<string>();
 
@@ -53,14 +53,22 @@ namespace LemonMarkets.Repos.V1
             if (request.Type != OrderType.All) param.Add($"type={request.Type.ToString().ToLower()}");
             if (request.Status != OrderStatus.All) param.Add($"status={request.Status.ToString().ToLower()}");
 
-            if (param.Count == 0) return this.tradingApi.GetAsync<LemonResults<Order>>("orders")!;
+            if (param.Count == 0) return this.GetAsyncLocal("orders");
 
             StringBuilder buildParams = new StringBuilder();
             buildParams.Append("?");
             buildParams.AppendJoin("&", param);
 
-            return this.tradingApi.GetAsync<LemonResults<Order>>("orders", buildParams)!;
+            return this.GetAsyncLocal("orders", buildParams);
         }
+
+        private async Task<LemonResults<Order>> GetAsyncLocal(params object[] header)
+        {
+            LemonResultsInternal<Order> result = (await this.tradingApi.GetAsync<LemonResultsInternal<Order>> (header))!;
+
+            return new LemonResults<Order>(result, new PageLoader<Order>(this.tradingApi));
+        }
+
 
         public Task<LemonResult<Order>> GetAsync(string id)
         {

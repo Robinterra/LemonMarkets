@@ -44,7 +44,14 @@ namespace LemonMarkets.Repos.V1
             buildParams.Append("?");
             buildParams.AppendJoin("&", param);
 
-            return this.marketApi.GetAsync<LemonResults<Quote>> ("quotes/latest", buildParams)!;
+            return this.GetAsync("quotes/latest", buildParams);
+        }
+
+        private async Task<LemonResults<Quote>> GetAsync(params object[] header)
+        {
+            LemonResultsInternal<Quote> result = (await this.marketApi.GetAsync<LemonResultsInternal<Quote>> (header))!;
+
+            return new LemonResults<Quote>(result, new PageLoader<Quote>(this.marketApi));
         }
 
         #endregion methods
