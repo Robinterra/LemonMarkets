@@ -93,7 +93,7 @@ namespace LemonMarkets.UnitTests
 
             List<Quote> quotes = this.quotes.Where ( t => isin.Contains ( t.Isin ) && t.Mic == mic ).ToList();
 
-            FakeApiResponse response = new FakeApiResponse (HttpStatusCode.OK, new LemonResults<Quote>() { Results = quotes, Status = "ok"});
+            FakeApiResponse response = new FakeApiResponse (HttpStatusCode.OK, new LemonResults<Quote>("ok", quotes));
 
             return Task.FromResult ( response );
         }
@@ -157,7 +157,7 @@ namespace LemonMarkets.UnitTests
 
             List<Quote> quotes = this.quotes.Where ( t => isin.Contains ( t.Isin ) && t.Time <= to && t.Time >= from ).ToList();
 
-            FakeApiResponse response = new FakeApiResponse (HttpStatusCode.OK, new LemonResults<Quote>() { Results = quotes, Status = "ok"});
+            FakeApiResponse response = new FakeApiResponse (HttpStatusCode.OK, new LemonResults<Quote>("ok", quotes));
 
             return Task.FromResult ( response );
         }

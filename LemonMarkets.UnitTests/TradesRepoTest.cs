@@ -93,7 +93,7 @@ namespace LemonMarkets.UnitTests
 
             List<Trade> trades = this.trades.Where ( t => isin.Contains ( t.Isin ) && t.Mic == mic ).ToList();
 
-            FakeApiResponse response = new FakeApiResponse (HttpStatusCode.OK, new LemonResults<Trade>() { Results = trades, Status = "ok"});
+            FakeApiResponse response = new FakeApiResponse (HttpStatusCode.OK, new LemonResults<Trade>("ok", trades));
 
             return Task.FromResult ( response );
         }

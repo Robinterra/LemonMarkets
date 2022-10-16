@@ -120,7 +120,7 @@ namespace LemonMarkets.UnitTests
 
             List<PositionEntry> positions = this.portfolio.Where ( t => isin.Contains ( t.Isin ) ).ToList();
 
-            FakeApiResponse response = new FakeApiResponse (HttpStatusCode.OK, new LemonResults<PositionEntry>() { Results = positions, Status = "ok"});
+            FakeApiResponse response = new FakeApiResponse (HttpStatusCode.OK, new LemonResults<PositionEntry>("ok", positions));
 
             return Task.FromResult ( response );
         }
