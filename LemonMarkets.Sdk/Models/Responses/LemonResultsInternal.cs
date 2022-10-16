@@ -38,5 +38,17 @@ namespace LemonMarkets.Models.Responses
         }
 
         #endregion get/set
+
+        public LemonResultsInternal()
+        {
+
+        }
+
+        public LemonResultsInternal(string status, List<T> results)
+        {
+            this.Status = status;
+            this.Results = results;
+        }
+
     }
 }
