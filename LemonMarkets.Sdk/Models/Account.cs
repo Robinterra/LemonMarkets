@@ -208,7 +208,7 @@ namespace LemonMarkets.Models
         /// <summary>
         /// Your tax tax allowance - between 0 and 801 €, as specified in your onboarding process
         /// </summary>
-        public int Tax_allowance
+        public int? Tax_allowance
         {
             get;
             set;
