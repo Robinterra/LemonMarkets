@@ -113,7 +113,7 @@ namespace LemonMarkets.UnitTests
 
             List<Statement> statements = this.statements.Where ( t => type == PositionStatementType.All || type == t.Type ).ToList();
 
-            FakeApiResponse response = new FakeApiResponse (HttpStatusCode.OK, new LemonResults<Statement>("ok", statements));
+            FakeApiResponse response = new FakeApiResponse (HttpStatusCode.OK, new LemonResultsInternal<Statement>("ok", statements));
 
             return Task.FromResult ( response );
         }

@@ -67,7 +67,7 @@ namespace LemonMarkets.UnitTests
 
             List<BankStatement> statements = this.statements.Where ( t => (isin.Any() ? isin.Contains ( t.Isin ) : true) && t.Created_at <= to && t.Created_at >= from && (type == BankstatementType.None ? true : type == t.Type) ).ToList();
 
-            FakeApiResponse response = new FakeApiResponse (HttpStatusCode.OK, new LemonResults<BankStatement>("ok", statements));
+            FakeApiResponse response = new FakeApiResponse (HttpStatusCode.OK, new LemonResultsInternal<BankStatement>("ok", statements));
 
             return Task.FromResult(response);
         }
