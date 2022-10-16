@@ -198,7 +198,7 @@ namespace LemonMarkets.UnitTests
 
             List<Order> quotes = this.orders.Where ( t => (isin.Any() ? isin.Contains ( t.Isin ) : true) && t.Created_at <= to && t.Created_at >= from && (side == OrderSide.All ? true : side == t.Side)&& (status == OrderStatus.All ? true : status == t.Status) ).ToList();
 
-            FakeApiResponse response = new FakeApiResponse (HttpStatusCode.OK, new LemonResults<Order>() { Results = quotes, Status = "ok"});
+            FakeApiResponse response = new FakeApiResponse (HttpStatusCode.OK, new LemonResultsInternal<Order>("ok",  quotes));
 
             return Task.FromResult(response);
         }

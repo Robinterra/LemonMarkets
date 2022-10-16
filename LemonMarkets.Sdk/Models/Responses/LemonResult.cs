@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ApiService;
 
-namespace LemonMarkets.Models.Responses
+namespace LemonMarkets
 {
     public class LemonResult : IApiResponse
     {
@@ -87,7 +87,7 @@ namespace LemonMarkets.Models.Responses
         public Exception? Exception
         {
             get;
-            private set;
+            internal set;
         }
 
         #endregion get/set

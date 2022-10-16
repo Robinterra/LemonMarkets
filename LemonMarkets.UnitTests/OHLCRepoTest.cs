@@ -94,7 +94,7 @@ namespace LemonMarkets.UnitTests
 
             List<OHLCEntry> ohlcs = this.ohlcs.Where ( t => isin.Contains ( t.Isin ) && t.Mic == mic ).ToList();
 
-            FakeApiResponse response = new FakeApiResponse (HttpStatusCode.OK, new LemonResults<OHLCEntry>() { Results = ohlcs, Status = "ok"});
+            FakeApiResponse response = new FakeApiResponse (HttpStatusCode.OK, new LemonResultsInternal<OHLCEntry>("ok", ohlcs));
 
             return Task.FromResult ( response );
         }
@@ -164,7 +164,7 @@ namespace LemonMarkets.UnitTests
 
             List<OHLCEntry> ohlcs = this.ohlcs.Where ( t => isin.Contains ( t.Isin ) && t.Time <= to && t.Time >= from ).ToList();
 
-            FakeApiResponse response = new FakeApiResponse (HttpStatusCode.OK, new LemonResults<OHLCEntry>() { Results = ohlcs, Status = "ok"});
+            FakeApiResponse response = new FakeApiResponse (HttpStatusCode.OK, new LemonResultsInternal<OHLCEntry>("ok", ohlcs));
 
             return Task.FromResult ( response );
         }
