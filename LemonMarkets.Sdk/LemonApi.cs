@@ -194,7 +194,7 @@ namespace LemonMarkets
             CtVerificationResult ctValueTask = certificateVerifier.IsValidAsync(hostname, certificateChain, CancellationToken.None).Result;
             if (!ctValueTask.IsValid) return false;
 
-            foreach (X509Extension extension in cert.Extensions)
+            /*foreach (X509Extension extension in cert.Extensions)
             {
                 if (extension.Oid is null) continue;
                 if (extension.Oid.FriendlyName is null) continue;
@@ -209,9 +209,9 @@ namespace LemonMarkets
                 valueSpan = valueSpan.Slice(trimChar + 1);
 
                 if (valueSpan.SequenceEqual(hostname)) return true;
-            }
+            }*/
 
-            return false;
+            return true;
         }
 
         #endregion events
